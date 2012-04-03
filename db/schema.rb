@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120403044846) do
+ActiveRecord::Schema.define(:version => 20120403052628) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20120403044846) do
     t.string   "roles"
     t.boolean  "active"
     t.string   "linkedinid"
+    t.boolean  "banned"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

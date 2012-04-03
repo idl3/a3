@@ -30,6 +30,7 @@ A3::Application.routes.draw do
 
   namespace :admin do
     match '/' => 'dashboard#index', :as => :dashboard
+    match '/users/:id/ban' => 'users#ban', :as => :ban_user
     resources :users
     resources :articles
     match '/page/:id/publish' => 'pages#publish', :as => :publish_page
