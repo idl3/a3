@@ -19,7 +19,7 @@
           = image_tag @business.logo
         - else
           %img{:src => "https://s3-ap-southeast-1.amazonaws.com/actatlys-dev/data/0/0.jpg"}
-      = f.file_field "logo"
+      = file_field_tag "logo"
       %br
       = f.label "Registration Number"
       = f.text_field :regno
@@ -66,6 +66,18 @@
     .splitform-thirdend
       = f.label "Phone Number"
       = text_field_tag "contact[phone]"
+      %br
+      = f.label "Website"
+      = text_field_tag "contact[website]"
+      %br
+      = f.label "Blog"
+      = text_field_tag "contact[blog]"
+      %br
+      = f.label "Twitter"
+      = text_field_tag "contact[twitter]"
+      %br
+      = f.label "Facebook"
+      = text_field_tag "contact[facebook]"
     .end
       = f.check_box :approved
       = f.label "Approved", :class => "inline"

@@ -1,6 +1,14 @@
-%h2= "Edit #{resource_name.to_s.humanize}"
+:css
+  .well input {
+    width: 90%;
+  }
+  div i {
+    font-size: 11px;
+    font-style: italic;
+  }
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "well" }) do |f|
+  %h2= "Edit #{resource_name.to_s.humanize}"
   = devise_error_messages!
 
   %div
@@ -25,10 +33,10 @@
 
   %div
     = f.submit "Update", :class => "btn btn-primary"
+  %br
+  %h3 Cancel my account
 
-%h3 Cancel my account
+  %p
+    =raw "Unhappy? #{link_to 'Cancel my account', registration_path(resource_name), :confirm => 'Are you sure?', :method => :delete}."
 
-%p
-  =raw "Unhappy? #{link_to 'Cancel my account', registration_path(resource_name), :confirm => 'Are you sure?', :method => :delete}."
-
-= link_to "Back", :back
+  = link_to "Back", :back

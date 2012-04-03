@@ -11,6 +11,7 @@ class Admin::BusinessesController < Admin::BaseController
 
   def create
     @business = Business.new(params[:business])
+    @business.attachments << Attachment.new(:content => params[:logo], :category => "primarylogo")
     if @business.save
       flash[:success] = "Successfully created the new business '#{@business.name}'"
       redirect_to admin_businesses_path
@@ -30,6 +31,20 @@ class Admin::BusinessesController < Admin::BaseController
   def update
     @business = Business.find_by_id(params[:id])
     @business.attributes = params[:business]
+    if params[:logo]
+      puts "LOGO DETECTED"
+      attachments = Attachment.where(:attachable_id => @business.id, :attachable_type => "Business", :category => "primarylogo")
+      if attachments.count > 0
+        puts "REPLACING OLD LOGO"
+        attachments.each do |a|
+          a.category = "archivelogo"
+          a.save
+        end
+      end
+      puts "ADDING NEW LOGO"
+      newlogo = Attachment.new(:content => params[:logo], :category => "primarylogo")
+      @business.attachments.empty?
+    end
     if params[:array]
       if founders = params[:array][:founders]
         @business.founders = []
