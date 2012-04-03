@@ -1,0 +1,40 @@
+.span2
+  &nbsp;
+.span8.well
+  %h2 Admin Dashboard
+  %br
+  .biz{:style => "float:left;width:25%"}
+    %h3 Businesses
+    %br
+    %h4= "Total : #{@dash.totalbiz}"
+    %br
+    %h4= "Approved : #{@dash.approvedbiz}"
+    %br
+    %h4= "Pending : #{@dash.pendingbiz}"
+  .people{:style => "float:left;width:25%"}
+    %h3 People
+    %br
+    %h4= "Total : #{@dash.totalpeople}"
+    %br
+    %h4= "Approved : #{@dash.approvedpeople}"
+    %br
+    %h4= "Pending : #{@dash.pendingpeople}"
+  .articles{:style => "float:left;width:25%"}
+    %h3 Articles
+    %br
+    %h4= "Total : #{@dash.totalarticles}"
+    %br
+    %h4= "Published : #{@dash.publishedarticles}"
+    %br
+    %h4= "Unpublished : #{@dash.unpublishedarticles}"
+  .users{:style => "float:left;width:25%"}
+    %h3 Users
+    %br
+    %h4= "Total : #{@dash.totalusers}"
+    %br
+    %h4= "Active : #{@dash.activeusers}"
+    %br
+    %h4= "Linkedin : #{@dash.linkedinusers}"
+
+.span2
+  &nbsp;
