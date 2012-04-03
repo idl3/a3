@@ -8,8 +8,18 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   has_one :person
   has_many :businesses
+  has_many :posts, :as => :postable
+  serialize :roles
 
   def role?(role)
     self.roles.include?(role)
+  end
+
+  def admin?
+    unless self.roles.nil?
+      self.roles.include?(:admin)
+    else
+      false
+    end
   end
 end

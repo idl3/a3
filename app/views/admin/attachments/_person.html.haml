@@ -1,0 +1,13 @@
+- @person.each do |b|
+  %tr
+    %td
+      = b.id
+    %td
+      = b.attachable_id
+    %td
+      = b.content_identifier
+    %td
+      = image_tag b.content.url
+    %td.tableactions
+      %a.btn{:href => edit_admin_attachment_path(b)} Edit
+      %a.btn.btn-danger{:href => admin_attachment_path(b), "data-method" => :delete, "data-confirm" => "Are you sure?"} Delete

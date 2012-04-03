@@ -1,0 +1,27 @@
+- content_for(:css) do
+  = stylesheet_link_tag "admin", :media => "all"
+.tabbable
+  .biznav
+    %ul.nav.nav-tabs.bmenu
+      %li.active
+        %a{:href => "#1", "data-toggle" => "tab"} Business
+      %li
+        %a{:href => "#2", "data-toggle" => "tab"} Person
+      %li
+        %a{:href => "#3", "data-toggle" => "tab"} Page
+      %li
+        %a{:href => "#4", "data-toggle" => "tab"} Article
+    %ul.navactions
+      %li
+        %a.btn.btn-primary.btn-mini{:href => new_admin_page_path } Add A New Attachment
+    .clear
+  - panes = ["business","person","page","article"]
+  .tab-content
+    - 2.times do |i|
+      %div{:id => i+1, :class => i+1 == 1 ? "tab-pane active": "tab-pane"}
+        %div
+          %table.table.table-bordered.table-striped
+            = render "tablehead"
+            %tbody
+              - puts panes[i]
+              = render panes[i]

@@ -1,0 +1,8 @@
+.span3
+  &nbsp;
+.listing.span9
+  - if @people.empty?
+    There are no people in the database
+  - else
+    - @people.each do |person|
+      = person.inspect

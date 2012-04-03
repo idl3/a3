@@ -1,0 +1,5 @@
+class Person < ActiveRecord::Base
+  belongs_to :user
+  has_one :contact, :as => :contactable
+  accepts_nested_attributes_for :contact
+end

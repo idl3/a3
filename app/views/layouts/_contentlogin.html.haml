@@ -1,0 +1,23 @@
+.row.notifybar
+  .span8
+    &nbsp;
+  .span4.notification
+    - flash.each do |k,v|
+      - case k
+      - when :alert
+        .alert.alert-error= v
+      - when :notice
+        .alert.alert-info= v
+      - else
+        .alert.alert-success= v
+
+.row.maincontent
+  .row
+    .span4
+      &nbsp;
+    .span4
+      = yield
+    .span4
+      &nbsp;
+  .row
+    = render "layouts/footer"

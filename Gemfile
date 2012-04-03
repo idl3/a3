@@ -15,6 +15,8 @@ end
 
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
-gem 'carrierwave'
+gem 'carrierwave', :git => "git://github.com/jnicklas/carrierwave.git"
+gem 'rmagick'
 gem 'devise'
 gem 'cancan'
+gem 'tinymce-rails', :git => "git://github.com/spohlenz/tinymce-rails.git"

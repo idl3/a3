@@ -1,0 +1,12 @@
+- @unapproved.each do |b|
+  %tr
+    %td
+      = b.id
+    %td
+      = b.name
+    %td
+      = truncate(b.uvp, :length => 100)
+    %td.tableactions
+      %a.btn{:href => admin_approve_business_path(b), :class => "btn-info", :method => "put" } Publish
+      %a.btn{:href => edit_admin_business_path(b)} Edit
+      %a.btn.btn-danger{:href => admin_business_path(b), "data-method" => :delete, "data-confirm" => "Are you sure?"} Delete

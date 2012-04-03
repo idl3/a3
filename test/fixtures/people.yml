@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  birthdate: 2012-03-26
+  designation: MyString
+  company: MyString
+  background: MyText
+  portfolio: MyText
+
+two:
+  birthdate: 2012-03-26
+  designation: MyString
+  company: MyString
+  background: MyText
+  portfolio: MyText

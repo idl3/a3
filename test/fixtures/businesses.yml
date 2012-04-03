@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  regno: MyString
+  biztype: 1
+  industry-pri: 1
+  industry-sec: 1
+  country: MyString
+  address: MyString
+  founded: 1
+  shareholding: MyString
+  mission: MyString
+  founders: MyString
+  staffno: 1
+  keystaff: MyString
+  investors: MyString
+  advisors: MyString
+  uvp: MyText
+  revenuemodel: MyText
+  target: MyText
+  competitors: MyString
+  nutshell: MyString
+
+two:
+  regno: MyString
+  biztype: 1
+  industry-pri: 1
+  industry-sec: 1
+  country: MyString
+  address: MyString
+  founded: 1
+  shareholding: MyString
+  mission: MyString
+  founders: MyString
+  staffno: 1
+  keystaff: MyString
+  investors: MyString
+  advisors: MyString
+  uvp: MyText
+  revenuemodel: MyText
+  target: MyText
+  competitors: MyString
+  nutshell: MyString

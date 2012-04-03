@@ -1,0 +1,49 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.brand{:href => "/"}
+        %img{:src => "/assets/logo.png"}
+      .container.nav-collapse
+        %ul.nav
+          %li.divider-vertical
+          %li= link_to "Businesses", businesses_path
+          %li.divider-vertical
+          %li= link_to "People", people_path
+          %li.divider-vertical
+          %li= link_to "About Us", page_path("about")
+          %li.divider-vertical
+          %li= link_to "Blog", articles_path
+          %li.divider-vertical
+          %li= link_to "Contact", page_path("contact")
+          %li.divider-vertical
+          %li= link_to "Support", page_path("support")
+          %li.divider-vertical
+        %ul.nav{:style => "float:right"}
+          - if user_signed_in?
+            %li.divider-vertical
+            %li.btn-group.profilebtn{:style => "box-shadow: none;margin-top: 0px;"}
+              %a{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"}
+                Account
+                %span.caret
+              %ul.dropdown-menu.profilemenu
+                %li
+                  %a{:href => edit_user_registration_path}
+                    %i.icon-pencil
+                    Edit Profile
+                %li
+                  %a{:href => "#"}
+                    %i.icon-heart
+                    My Contributions
+                %li
+                  %a{:href => destroy_user_session_path, "data-method" => :delete}
+                    %i.icon-off
+                    Log Out
+            %li.divider-vertical
+          - else
+            %li.divider-vertical
+            %li= link_to "Register / Log In", new_user_session_path
+            %li.divider-vertical

@@ -1,0 +1,25 @@
+- content_for(:css) do
+  = stylesheet_link_tag "admin", :media => "all"
+.tabbable
+  .biznav
+    %ul.nav.nav-tabs.bmenu
+      %li.active
+        %a{:href => "#1", "data-toggle" => "tab"} All
+      %li
+        %a{:href => "#2", "data-toggle" => "tab"} Published
+      %li
+        %a{:href => "#3", "data-toggle" => "tab"} Unpublished
+    %ul.navactions
+      %li
+        %a.btn.btn-primary.btn-mini{:href => new_admin_article_path} Add A New Article
+    .clear
+  - panes = ["articles","published","unpublished"]
+  .tab-content
+    - 3.times do |i|
+      %div{:id => i+1, :class => i+1 == 1 ? "tab-pane active": "tab-pane"}
+        %div
+          %table.table.table-bordered.table-striped
+            = render "tablehead"
+            %tbody
+              - puts panes[i]
+              = render panes[i]

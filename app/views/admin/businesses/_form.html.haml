@@ -1,0 +1,75 @@
+- content_for :css do
+  = stylesheet_link_tag "admin", :media => "all"
+  = stylesheet_link_tag "forms", :media => "all"
+- content_for :js do
+  = javascript_include_tag "form"
+.span2
+  &nbsp;
+.span8
+  %h3= @business.id.nil? ? 'New Business' : "Edit #{@business.name} ##{@business.id}"
+  %br
+  = form_for @business, :url => @business.id.nil? ? admin_businesses_path(@page) : admin_business_path(@page), :html => {:class => "well admin-edit", :multipart => true} do |f|
+    .splitform-third
+      = f.label "Name"
+      = f.text_field :name
+      %br
+      = f.label "Logo"
+      .logo
+        - if @business.logo
+          = image_tag @business.logo
+        - else
+          %img{:src => "https://s3-ap-southeast-1.amazonaws.com/actatlys-dev/data/0/0.jpg"}
+      = f.file_field "logo"
+      %br
+      = f.label "Registration Number"
+      = f.text_field :regno
+      %br
+      = f.label "Founded On"
+      = select_year(@business.founded ? @business.founded : Time.now, :start_year => Date.today.year, :end_year => 2000, :field_name => "founded", :prefix => "business")
+      %br
+      = f.label "Founders"
+      - if @business.founders.empty?
+        = text_field_tag "array[founders][0]", nil, :placeholder => "+ Add a Founder"
+      - else
+        - @business.founders.each_index do |k|
+          .founder
+            = text_field_tag "array[founders][#{k}]", @business.founders[k]
+            .removeme
+              = label_tag "remove[founders][#{k}]", :class => "btn btn-danger", "data-toggle" => "button" do
+                %i.icon-remove-sign
+                Remove
+              = check_box_tag "remove[founders][#{k}]", @business.founders[k]
+        .founder.foundernew
+          = text_field_tag "array[founders][0]", nil, :placeholder => "+ Add a Founder"
+          .removeme
+            = link_to "", :class => "btn btn-danger remove-founder" do
+              %i.icon-remove-sign
+              Remove
+      %a{:href => "#{admin_business_addfield_path}?new=0", "data-remote" => true, :class => "addnewfounder", :new => "0"}
+        %br
+        %i.icon-plus
+        Add Another Founder
+      %br
+    .splitform-third
+      = f.label "Unique Value Proposition"
+      = f.text_area :uvp, :class => "tinymce"
+      %br
+      = f.label "Target Market"
+      = f.text_field :target
+      %br
+      = f.label "Competitors"
+      = f.text_field :competitors
+      %br
+      = f.label "Advisors"
+      = f.text_field :advisors
+      = tinymce
+    .splitform-thirdend
+      = f.label "Phone Number"
+      = text_field_tag "contact[phone]"
+    .end
+      = f.check_box :approved
+      = f.label "Approved", :class => "inline"
+      = f.submit @business.id.nil? ? "Create" : "Update", :class => "btn btn-primary"
+      = link_to "Cancel", admin_businesses_path, :class => "btn"
+.span2
+  &nbsp;

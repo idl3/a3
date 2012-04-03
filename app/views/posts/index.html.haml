@@ -1,0 +1,6 @@
+- content_for :title do
+  Home
+- content_for :css do
+  = stylesheet_link_tag "index", :media => "all"
+.span12.homebg{:align => "center"}
+  =raw @page.body

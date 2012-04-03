@@ -1,0 +1,14 @@
+- @users.each do |b|
+  %tr
+    %td
+      = b.id
+    %td
+      = b.email
+    %td
+      = b.last_sign_in_at
+    %td
+      = b.last_sign_in_ip
+    %td.tableactions
+      %a.btn{:href => admin_ban_user_path(b), :class => b.banned ? "btn-warning" : "btn-info" }= b.banned ? "Ban" : "Unban"
+      %a.btn{:href => edit_admin_user_path(b)} Edit
+      %a.btn.btn-danger{:href => admin_user_path(b), "data-method" => :delete, "data-confirm" => "Are you sure?"} Delete
