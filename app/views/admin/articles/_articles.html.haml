@@ -7,6 +7,6 @@
     %td
       = truncate(b.body, :length => 100)
     %td.tableactions
-      %a.btn{:href => admin_publish_page_path(b), :class => b.published ? "btn-warning" : "btn-info" }= b.published ? "Unpublish" : "Publish"
-      %a.btn{:href => edit_admin_page_path(b)} Edit
-      %a.btn.btn-danger{:href => admin_page_path(b), "data-method" => :delete, "data-confirm" => "Are you sure?"} Delete
+      %a.btn{:href => admin_publish_article_path(b), :class => b.published ? "btn-warning" : "btn-info" }= b.published ? "Unpublish" : "Publish"
+      %a.btn{:href => edit_admin_article_path(b)} Edit
+      %a.btn.btn-danger{:href => admin_article_path(b), "data-method" => :delete, "data-confirm" => "Are you sure?"} Delete

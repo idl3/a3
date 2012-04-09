@@ -29,7 +29,7 @@
       %br
       = f.label "Founders"
       - if @business.founders.empty?
-        = text_field_tag "array[founders][0]", nil, :placeholder => "+ Add a Founder"
+        = text_field_tag "array[addfounders][0]", nil, :placeholder => "+ Add a Founder"
       - else
         - @business.founders.each_index do |k|
           .founder
@@ -40,9 +40,9 @@
                 Remove
               = check_box_tag "remove[founders][#{k}]", @business.founders[k]
         .founder.foundernew
-          = text_field_tag "array[founders][0]", nil, :placeholder => "+ Add a Founder"
+          = text_field_tag "array[addfounders][0]", nil, :placeholder => "+ Add a Founder"
           .removeme
-            = link_to "", :class => "btn btn-danger remove-founder" do
+            = link_to "#", :class => "btn btn-danger remove-founder" do
               %i.icon-remove-sign
               Remove
       %a{:href => "#{admin_business_addfield_path}?new=0", "data-remote" => true, :class => "addnewfounder", :new => "0"}
@@ -52,7 +52,7 @@
       %br
     .splitform-third
       = f.label "Unique Value Proposition"
-      = f.text_area :uvp, :class => "tinymce"
+      = f.text_area :uvp
       %br
       = f.label "Target Market"
       = f.text_field :target
@@ -62,22 +62,22 @@
       %br
       = f.label "Advisors"
       = f.text_field :advisors
-      = tinymce
+
     .splitform-thirdend
       = f.label "Phone Number"
-      = text_field_tag "contact[phone]"
+      = text_field_tag "contact[phone]", @business.contact.phone if @business.contact
       %br
       = f.label "Website"
-      = text_field_tag "contact[website]"
+      = text_field_tag "contact[website]", @business.contact.website if @business.contact
       %br
       = f.label "Blog"
-      = text_field_tag "contact[blog]"
+      = text_field_tag "contact[blog]", @business.contact.blog if @business.contact
       %br
       = f.label "Twitter"
-      = text_field_tag "contact[twitter]"
+      = text_field_tag "contact[twitter]", @business.contact.twitter if @business.contact
       %br
       = f.label "Facebook"
-      = text_field_tag "contact[facebook]"
+      = text_field_tag "contact[facebook]", @business.contact.facebook if @business.contact
     .end
       = f.check_box :approved
       = f.label "Approved", :class => "inline"

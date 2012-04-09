@@ -1,11 +1,25 @@
 :css
-  .blogbody{
-    padding:15px;
+  .blogblock{
+    border-radius: 5px;
+    background: #EEE;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+  .bloghead{
+    background: #BFBFBF;
+  }
+  b{
+    font-weight: bold;
+  }
+  .bphead{
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
   }
 .span1
   &nbsp;
 .span7
-  .bloghead.well
+  .blogblock.bloghead
     %h1 The Blog
     %br
     .menu
@@ -18,12 +32,15 @@
           %a{:href => "/blog/c/startups"} Startups
         %li
           %a{:href => "/blog/c/business"} Business
-  .blogbody
+  .blogblock
     - if @articles.count > 0
       - @articles.each do |a|
-        .blog{:id => "article-#{a.id}"}
-          %h2= a.title
-          .body= a.body
+        .blogpost{:id => "article-#{a.id}"}
+          .bphead
+            %h2
+              %a{:href => article_path(a.name)}= a.title
+            %span{:style => "font-style:italic;"}=raw a.updated_at.strftime("Article posted on <b>%m/%d/%Y %I:%M%p</b> by <b>#{a.author}</b>")
+          .body=raw truncate(a.body, :length => 250, :omission => "<i style='font-style:italic'> ... <a href=#{article_path(a.name)}>read more</a></i>")
     - else
       There are no articles matching your criteria!
 .span3

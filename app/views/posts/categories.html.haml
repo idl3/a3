@@ -1,12 +1,19 @@
 :css
-  .blogbody{
-    padding:15px;
+  .blogblock{
+    border-radius:5px;
+    background: #EEE;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+  .bloghead{
+    background: #BFBFBF;
   }
 .span1
   &nbsp;
 .span7
-  .bloghead.well
+  .blogblock.bloghead
     %h1 The Blog
+    %br
     .menu
       %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
         %li.active
@@ -17,7 +24,7 @@
           %a{:href => "/blog/c/startups"} Startups
         %li
           %a{:href => "/blog/c/business"} Business
-  .blogbody
+  .blogblock
     - if @categories.count > 0
       - @categories.each do |c|
         .category{:id => "article-#{c.id}"}

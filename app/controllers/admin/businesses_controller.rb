@@ -11,9 +11,9 @@ class Admin::BusinessesController < Admin::BaseController
 
   def create
     @business = Business.new(params[:business])
-    @business.attachments << Attachment.new(:content => params[:logo], :category => "primarylogo")
     if @business.save
       flash[:success] = "Successfully created the new business '#{@business.name}'"
+      @business.attachments << Attachment.new(:content => params[:logo], :category => "primarylogo")
       redirect_to admin_businesses_path
     else
       flash[:alert] = "There was an error while trying to create the business '#{@business.name}'"
@@ -32,16 +32,13 @@ class Admin::BusinessesController < Admin::BaseController
     @business = Business.find_by_id(params[:id])
     @business.attributes = params[:business]
     if params[:logo]
-      puts "LOGO DETECTED"
       attachments = Attachment.where(:attachable_id => @business.id, :attachable_type => "Business", :category => "primarylogo")
       if attachments.count > 0
-        puts "REPLACING OLD LOGO"
         attachments.each do |a|
           a.category = "archivelogo"
           a.save
         end
       end
-      puts "ADDING NEW LOGO"
       newlogo = Attachment.new(:content => params[:logo], :category => "primarylogo")
       @business.attachments.empty?
     end
@@ -52,16 +49,31 @@ class Admin::BusinessesController < Admin::BaseController
           @business.founders << f
         end
       end
+      if newfounders = params[:array][:addfounders]
+        newfounders.each_value do |nf|
+          @business.founders << nf if nf != ""
+        end
+      end
     end
     if params[:remove]
       if remove = params[:remove][:founders]
+        puts "Names to Remove: #{remove}"
         if current = @business.founders
           new = []
+          puts current
           remove.each_value do |r|
-            new << r unless current.include?(r)
+            @business.founders.delete(r) if current.include?(r)
           end
-          @business.founders = new if @business.founders != new
+          @business.founders.compact.reject(&:blank?)
+          puts @business.founders.inspect
         end
+      end
+    end
+    if params[:contact]
+      if @business.contact
+        @business.contact.attributes = params[:contact]
+      else
+        @business.contact = Contact.new(params[:contact])
       end
     end
     if @business.save

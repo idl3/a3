@@ -32,6 +32,7 @@ A3::Application.routes.draw do
     match '/' => 'dashboard#index', :as => :dashboard
     match '/users/:id/ban' => 'users#ban', :as => :ban_user
     resources :users
+    match '/article/:id/publish' => 'articles#publish', :as => :publish_article
     resources :articles
     match '/page/:id/publish' => 'pages#publish', :as => :publish_page
     resources :pages

@@ -1,6 +1,63 @@
-.span2
+:css
+  .blogblock{
+    border-radius:5px;
+    background: #EEE;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+  .bloghead{
+    background: #BFBFBF;
+  }
+.span1
   &nbsp;
-.span8
-  = @article.inspect
-.span2
-  &nsbp;
+.span7
+  .blogblock.bloghead
+    %h1= "The Blog : #{@article.title}"
+    %br
+    .menu
+      %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
+        %li{:class => @article.category_id == nil ? "active" : nil}
+          %a{:href => "/blog"} All Posts
+        %li{:class => @article.category_id == 1 ? "active" : nil}
+          %a{:href => "/blog/c/actatlys"} Actatlys
+        %li{:class => @article.category_id == 2 ? "active" : nil}
+          %a{:href => "/blog/c/startups"} Startups
+        %li{:class => @article.category_id == 3 ? "active" : nil}
+          %a{:href => "/blog/c/business"} Business
+  .blogblock
+    .blog{:id => "article-#{@article.id}"}
+      %h2= @article.title
+      .body=raw @article.body
+.span3
+  .rightside
+    %h1 Twitter
+    %script{:charset => "utf-8", :src => "http://widgets.twimg.com/j/2/widget.js"}
+    :javascript
+      new TWTR.Widget({
+        version: 2,
+        type: 'profile',
+        rpp: 8,
+        interval: 30000,
+        width: 'auto',
+        height: 300,
+        theme: {
+          shell: {
+            background: '#bfbfbf',
+            color: '#4f4f4f'
+          },
+          tweets: {
+            background: '#6b6b6b',
+            color: '#fff8eb',
+            links: '#fcba56'
+          }
+        },
+        features: {
+          scrollbar: false,
+          loop: false,
+          live: true,
+          behavior: 'all'
+        }
+      }).render().setUser('actatlys').start();
+
+.span1
+  &nbsp;

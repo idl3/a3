@@ -12,6 +12,9 @@
     = f.label "Name"
     = f.text_field :name
     %br
+    = f.label "Category"
+    = f.select :category_id, @categories
+    %br
     = f.label "Content"
     = f.text_area :body, :class => "tinymce"
     - content_for :js do

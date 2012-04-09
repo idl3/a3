@@ -1,11 +1,17 @@
 :css
-  .blogbody{
-    padding:15px;
+  .blogblock{
+    border-radius:5px;
+    background: #EEE;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+  .bloghead{
+    background: #BFBFBF;
   }
 .span1
   &nbsp;
 .span7
-  .bloghead.well
+  .blogblock.bloghead
     %h1= "The Blog : #{@category.name}"
     %br
     .menu
@@ -18,12 +24,12 @@
           %a{:href => "/blog/c/startups"} Startups
         %li{:class => params[:name] == "business" ? "active" : nil }
           %a{:href => "/blog/c/business"} Business
-  .blogbody
+  .blogblock
     - if @category.articles.count > 0
-      - @categories.articles.each do |a|
+      - @category.articles.each do |a|
         .article{:id => "article-#{a.id}"}
           %h2= a.title
-          .article-body= a.body
+          .article-body=raw truncate(a.body, :length => 250, :omission => "<i style='font-style:italic'> ... <a href=#{article_path(a.name)}>read more</a></i>")
     - else
       There are no posts in this category
 .span3

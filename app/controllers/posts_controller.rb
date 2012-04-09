@@ -14,7 +14,7 @@ class PostsController < ApplicationController
   end
 
   def article
-    @article = Article.find(params[:id])
+    @article = Article.find_by_name(params[:id])
     if @article.nil? or @article.published != true
       redirect_to '/404'
     end

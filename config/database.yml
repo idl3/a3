@@ -1,11 +1,8 @@
 development:
-  adapter: postgresql
-  encoding: utf8
-  host: localhost
-  database: a3_dev
-  username: act3
-  password: klozz1
+  adapter: sqlite3
+  database: db/development.sqlite3
   pool: 5
+  timeout: 5000
 
 test:
   adapter: postgresql

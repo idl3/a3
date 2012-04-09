@@ -1,6 +1,6 @@
 class Business < ActiveRecord::Base
   belongs_to :user
-  has_one :contact, :as => :contactable
+  has_one :contact, :as => :contactable, :dependent => :destroy
   has_many :attachments, :as => :attachable, :dependent => :destroy
   attr_protected :id
   accepts_nested_attributes_for :attachments
