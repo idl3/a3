@@ -7,7 +7,6 @@
 .span7
   .bloghead.well
     %h1 The Blog
-    %br
     .menu
       %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
         %li.active
@@ -19,15 +18,16 @@
         %li
           %a{:href => "/blog/c/business"} Business
   .blogbody
-    - if @articles.count > 0
-      - @articles.each do |a|
-        .blog{:id => "article-#{a.id}"}
-          %h2= a.title
-          .body= a.body
+    - if @categories.count > 0
+      - @categories.each do |c|
+        .category{:id => "article-#{c.id}"}
+          %h2= c.name
+          .desc= c.description
     - else
-      There are no articles matching your criteria!
+      There are no categories
 .span3
   .rightside
+    Twitter & Facebook Here
     %h1 Twitter
     %script{:charset => "utf-8", :src => "http://widgets.twimg.com/j/2/widget.js"}
     :javascript
@@ -56,6 +56,5 @@
           behavior: 'all'
         }
       }).render().setUser('actatlys').start();
-
 .span1
   &nbsp;

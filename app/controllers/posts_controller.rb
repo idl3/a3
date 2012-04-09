@@ -24,4 +24,15 @@ class PostsController < ApplicationController
     @articles = Article.where(:published => true)
   end
 
+  def categories
+    @categories = Category.all
+  end
+
+  def category
+    unless @category = Category.find_by_slug(params[:name])
+      flash[:alert] = "Category '#{params[:name]}' does not exist"
+      redirect_to categories_path
+    end
+  end
+
 end

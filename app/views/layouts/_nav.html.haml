@@ -14,7 +14,7 @@
           %li.divider-vertical
           %li= link_to "People", people_path
           %li.divider-vertical
-          %li= link_to "About Us", page_path("about")
+          %li= link_to "About", page_path("about")
           %li.divider-vertical
           %li= link_to "Blog", articles_path
           %li.divider-vertical
@@ -25,8 +25,8 @@
         %ul.nav{:style => "float:right"}
           - if user_signed_in?
             %li.divider-vertical
-            %li.btn-group.profilebtn{:style => "box-shadow: none;margin-top: 0px;"}
-              %a{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"}
+            %li.btn-group.profilebtn.drowndown{:id => "profiledrop", :style => "box-shadow: none;margin-top: 0px;"}
+              %a.profiledrop{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"}
                 Account
                 %span.caret
               %ul.dropdown-menu.profilemenu

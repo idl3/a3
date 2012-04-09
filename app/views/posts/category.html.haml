@@ -6,26 +6,26 @@
   &nbsp;
 .span7
   .bloghead.well
-    %h1 The Blog
+    %h1= "The Blog : #{@category.name}"
     %br
     .menu
       %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
-        %li.active
+        %li
           %a{:href => "/blog"} All Posts
-        %li
+        %li{:class => params[:name] == "actatlys" ? "active" : nil }
           %a{:href => "/blog/c/actatlys"} Actatlys
-        %li
+        %li{:class => params[:name] == "startups" ? "active" : nil }
           %a{:href => "/blog/c/startups"} Startups
-        %li
+        %li{:class => params[:name] == "business" ? "active" : nil }
           %a{:href => "/blog/c/business"} Business
   .blogbody
-    - if @articles.count > 0
-      - @articles.each do |a|
-        .blog{:id => "article-#{a.id}"}
+    - if @category.articles.count > 0
+      - @categories.articles.each do |a|
+        .article{:id => "article-#{a.id}"}
           %h2= a.title
-          .body= a.body
+          .article-body= a.body
     - else
-      There are no articles matching your criteria!
+      There are no posts in this category
 .span3
   .rightside
     %h1 Twitter
@@ -56,6 +56,5 @@
           behavior: 'all'
         }
       }).render().setUser('actatlys').start();
-
 .span1
   &nbsp;

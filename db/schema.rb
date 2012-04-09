@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120403065246) do
+ActiveRecord::Schema.define(:version => 20120409031806) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -22,8 +22,10 @@ ActiveRecord::Schema.define(:version => 20120403065246) do
     t.string   "tags"
     t.integer  "author"
     t.integer  "moderator"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "category_id"
+    t.string   "category_type"
   end
 
   create_table "attachments", :force => true do |t|
@@ -60,6 +62,16 @@ ActiveRecord::Schema.define(:version => 20120403065246) do
     t.string   "name"
     t.string   "type"
     t.boolean  "approved"
+  end
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.integer  "category_id"
+    t.string   "category_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "comments", :force => true do |t|

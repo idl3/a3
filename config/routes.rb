@@ -43,6 +43,8 @@ A3::Application.routes.draw do
   end
 
   match '/blog' => 'posts#articles', :as => :articles
+  match '/blog/c' => 'posts#categories', :as => :categories
+  match '/blog/c/:name' => 'posts#category', :as => :category
   match '/blog/:id' => 'posts#article', :as => :article
   match '/:name' => 'posts#page', :as => :page
   root :to => 'posts#index'
