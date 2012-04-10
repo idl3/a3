@@ -28,7 +28,8 @@
     - if @category.articles.count > 0
       - @category.articles.each do |a|
         .article{:id => "article-#{a.id}"}
-          %h2= a.title
+          %h2
+            %a{:href => article_path(a.name)}= a.title
           .article-body=raw truncate(a.body, :length => 250, :omission => "<i style='font-style:italic'> ... <a href=#{article_path(a.name)}>read more</a></i>")
     - else
       There are no posts in this category

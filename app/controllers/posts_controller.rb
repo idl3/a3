@@ -21,7 +21,7 @@ class PostsController < ApplicationController
   end
 
   def articles
-    @articles = Article.where(:published => true)
+    @articles = Article.where(:published => true).reverse
   end
 
   def categories

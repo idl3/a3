@@ -65,19 +65,19 @@
 
     .splitform-thirdend
       = f.label "Phone Number"
-      = text_field_tag "contact[phone]", @business.contact.phone if @business.contact
+      = text_field_tag "contact[phone]", @business.contact ? @business.contact.phone : nil
       %br
       = f.label "Website"
-      = text_field_tag "contact[website]", @business.contact.website if @business.contact
+      = text_field_tag "contact[website]", @business.contact ? @business.contact.website : nil
       %br
       = f.label "Blog"
-      = text_field_tag "contact[blog]", @business.contact.blog if @business.contact
+      = text_field_tag "contact[blog]", @business.contact ? @business.contact.blog : nil
       %br
       = f.label "Twitter"
-      = text_field_tag "contact[twitter]", @business.contact.twitter if @business.contact
+      = text_field_tag "contact[twitter]", @business.contact ? @business.contact.twitter : nil
       %br
       = f.label "Facebook"
-      = text_field_tag "contact[facebook]", @business.contact.facebook if @business.contact
+      = text_field_tag "contact[facebook]", @business.contact ? @business.contact.facebook : nil
     .end
       = f.check_box :approved
       = f.label "Approved", :class => "inline"

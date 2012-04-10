@@ -7,7 +7,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def new
-
+    @user = User.new
   end
 
   def create
@@ -15,7 +15,19 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def edit
+    @user = User.find_by_id(params[:id])
+  end
 
+  def update
+    @user = User.find_by_id(params[:id])
+    @user.attributes = params[:user]
+    if @user.save
+      flash[:success] = "Successfully edited user '#{@user.email}'"
+      redirect_to admin_users_path
+    else
+      flash[:alert] = "There was an error editing user '#{@user.email}'"
+      redirect_to admin_user_path(@user)
+    end
   end
 
   def destroy

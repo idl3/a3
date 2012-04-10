@@ -39,7 +39,7 @@
           .bphead
             %h2
               %a{:href => article_path(a.name)}= a.title
-            %span{:style => "font-style:italic;"}=raw a.updated_at.strftime("Article posted on <b>%m/%d/%Y %I:%M%p</b> by <b>#{a.author}</b>")
+            %span{:style => "font-style:italic;"}=raw a.updated_at.strftime("Article posted on <b>%m/%d/%Y %I:%M%p</b> by <b>#{User.find_by_id(a.author).name}</b>")
           .body=raw truncate(a.body, :length => 250, :omission => "<i style='font-style:italic'> ... <a href=#{article_path(a.name)}>read more</a></i>")
     - else
       There are no articles matching your criteria!

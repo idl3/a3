@@ -7,6 +7,10 @@ class Admin::ArticlesController < Admin::BaseController
 
   def new
     @article = Article.new
+    @categories = {"All" => nil}
+    Category.all.each do |c|
+      @categories[c.name] = c.id
+    end
   end
 
   def show
@@ -15,6 +19,7 @@ class Admin::ArticlesController < Admin::BaseController
 
   def create
     article = Article.new(params[:article])
+    article.author = current_user.id
     if article.save
       flash[:success] = "Successfully created article"
       redirect_to admin_articles_path

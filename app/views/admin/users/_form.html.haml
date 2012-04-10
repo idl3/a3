@@ -4,21 +4,21 @@
 .span2
   &nbsp;
 .span8
-  = form_for @page, :url => @page.id.nil? ? admin_pages_path(@page) : admin_page_path(@page), :html => {:class => "well admin-edit"} do |f|
-    %h3= "#{@page.id.nil? ? 'New' : 'Edit' } Page"
-    = f.label "Title"
-    = f.text_field :title
+  = form_for @user, :url => @user.id.nil? ? admin_users_path(@user) : admin_user_path(@user), :html => {:class => "well admin-edit"} do |f|
+    %h3= "#{@user.id.nil? ? 'New' : 'Edit' } User"
+    = f.label "Email"
+    = f.text_field :email
     %br
     = f.label "Name"
     = f.text_field :name
     %br
-    = f.label "Content"
-    = f.text_area :body, :class => "tinymce"
-    = tinymce
+    = f.label "Password"
+    = text_field_tag :password
     %br
-    = f.check_box :published
-    = f.label "Published", :class => "inline"
-    = f.submit @page.id.nil? ? "Create" : "Update", :class => "btn btn-primary"
-    = link_to "Cancel", admin_pages_path, :class => "btn"
+    = f.label "Password Confirmation"
+    = text_field_tag :password_confirmation
+    %br
+    = f.submit @user.id.nil? ? "Create" : "Update", :class => "btn btn-primary"
+    = link_to "Cancel", admin_users_path, :class => "btn"
 .span2
   &nbsp;
