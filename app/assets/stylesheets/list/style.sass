@@ -2,7 +2,7 @@
 .boxed
   background: white
   +border-radius(7px)
-  +box-shadow(gray 1px 1px 1px)
+  +box-shadow(gray 1px 1px 0px)
   margin-bottom: 10px
   width: 88%
 
@@ -18,8 +18,12 @@
     position: relative
 
 .span2 > .thumbnail
+  border: none
   +border-radius(7px)
-  +box-shadow(gray 1px 1px 1px)
+  +box-shadow(gray 1px 1px 0px)
+  &:hover
+    +box-shadow(#999 0px 0px 12px)
+    +transition-duration(0.2s)
 
 .thumbnail
   position: relative

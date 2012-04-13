@@ -6,78 +6,88 @@
 .span2
   &nbsp;
 .span8
-  %h3= @business.id.nil? ? 'New Business' : "Edit #{@business.name} ##{@business.id}"
+  %h1= @business.id.nil? ? 'New Business' : "Edit #{@business.name} ##{@business.id}"
   %br
   = form_for @business, :url => @business.id.nil? ? admin_businesses_path(@page) : admin_business_path(@page), :html => {:class => "well admin-edit", :multipart => true} do |f|
-    .splitform-third
-      = f.label "Name"
-      = f.text_field :name
-      %br
-      = f.label "Logo"
-      .logo
-        - if @business.logo
-          = image_tag @business.logo
-        - else
-          %img{:src => "https://s3-ap-southeast-1.amazonaws.com/actatlys-dev/data/0/0.jpg"}
-      = file_field_tag "logo"
-      %br
-      = f.label "Registration Number"
-      = f.text_field :regno
-      %br
-      = f.label "Founded On"
-      = select_year(@business.founded ? @business.founded : Time.now, :start_year => Date.today.year, :end_year => 2000, :field_name => "founded", :prefix => "business")
-      %br
-      = f.label "Founders"
-      - if @business.founders.empty?
-        = text_field_tag "array[addfounders][0]", nil, :placeholder => "+ Add a Founder"
-      - else
-        - @business.founders.each_index do |k|
-          .founder
-            = text_field_tag "array[founders][#{k}]", @business.founders[k]
-            .removeme
-              = label_tag "remove[founders][#{k}]", :class => "btn btn-danger", "data-toggle" => "button" do
-                %i.icon-remove-sign
-                Remove
-              = check_box_tag "remove[founders][#{k}]", @business.founders[k]
-        .founder.foundernew
-          = text_field_tag "array[addfounders][0]", nil, :placeholder => "+ Add a Founder"
-          .removeme
-            = link_to "#", :class => "btn btn-danger remove-founder" do
-              %i.icon-remove-sign
-              Remove
-      %a{:href => "#{admin_business_addfield_path}?new=0", "data-remote" => true, :class => "addnewfounder", :new => "0"}
+    .formrow
+      %h2 Business Description
+      .splitform-half
+        = f.label "Name"
+        = f.text_field :name
         %br
-        %i.icon-plus
-        Add Another Founder
-      %br
-    .splitform-third
-      = f.label "Unique Value Proposition"
-      = f.text_area :uvp
-      %br
-      = f.label "Target Market"
-      = f.text_field :target
-      %br
-      = f.label "Competitors"
-      = f.text_field :competitors
-      %br
-      = f.label "Advisors"
-      = f.text_field :advisors
+        = f.label "Logo"
+        .logo
+          - if @business.logo
+            = image_tag @business.logo
+          - else
+            %img{:src => "https://s3-ap-southeast-1.amazonaws.com/actatlys-dev/data/0/0.jpg"}
+        = file_field_tag "logo"
+        %br
+        = f.label "Unique Value Proposition"
+        = f.text_area :uvp
+        %br
+        = f.label "What we are in a nutshell!"
+        = f.text_field :nutshell
+      .splitform-half
+        = f.label "Registration Number"
+        = f.text_field :regno
+        %br
+        = f.label "Founded On"
+        = select_year(@business.founded ? @business.founded : Time.now, :start_year => Date.today.year, :end_year => 2000, :field_name => "founded", :prefix => "business")
+        %br
+        = f.label "Industry"
+        = f.select :industrypri, @pindustries
+        .taggable
+          = f.label "Target Market"
+          = text_field_tag "addnewtarget", nil, :class => "taginput"
+          %a.btn.tagadd.addnewtarget{:href => "#{admin_businesses_path }/addfield?t=target&new=#{@business.target.try(:size) || 0}",:value => @business.target.size, "data-remote" => "true"} Add
+          .tags-target
+            - if @business.target.empty?
+              %em.notags There are no tags
+              .clear
+            - else
+              %em.notags There are no tags
+              - @business.target.each_index do |t|
+                .tag
+                  = @business.target[t]
+                  = hidden_field_tag "array[target][#{t}]", @business.target[t]
+                  %a.removetag{:href => "#"}
+                    %i.icon-remove-sign
+              .clear
 
-    .splitform-thirdend
-      = f.label "Phone Number"
-      = text_field_tag "contact[phone]", @business.contact ? @business.contact.phone : nil
-      %br
-      = f.label "Website"
-      = text_field_tag "contact[website]", @business.contact ? @business.contact.website : nil
-      %br
-      = f.label "Blog"
-      = text_field_tag "contact[blog]", @business.contact ? @business.contact.blog : nil
-      %br
-      = f.label "Twitter"
-      = text_field_tag "contact[twitter]", @business.contact ? @business.contact.twitter : nil
-      %br
-      = f.label "Facebook"
-      = text_field_tag "contact[facebook]", @business.contact ? @business.contact.facebook : nil
+        %br
+        = f.label "Competitors"
+        = render "addmore", :field => "competitor"
+        %br
+        = f.label "Advisors"
+        = render 'addmore', :field => "advisor"
+        %br
+        = f.label "Founders"
+        = render 'addmore', :field => "founder"
+        %br
+      .clear
+
+    .formrow
+      %h2 Contact Information
+      .splitform-half
+        = f.label "Phone Number"
+        = text_field_tag "contact[phone]", @business.contact ? @business.contact.phone : nil
+        %br
+        = f.label "Website"
+        = text_field_tag "contact[website]", @business.contact ? @business.contact.website : nil
+        %br
+        = f.label "Blog"
+        = text_field_tag "contact[blog]", @business.contact ? @business.contact.blog : nil
+        %br
+        = f.label "Twitter"
+        = text_field_tag "contact[twitter]", @business.contact ? @business.contact.twitter : nil
+        %br
+        = f.label "Facebook"
+        = text_field_tag "contact[facebook]", @business.contact ? @business.contact.facebook : nil
+      .splitform-half
+        &nbsp;
+      .clear
+
     .end
       = f.check_box :approved
       = f.label "Approved", :class => "inline"

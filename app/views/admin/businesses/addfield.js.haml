@@ -1,9 +1,24 @@
 - if @resp
   :plain
     var url = '#{@url}';
-    $('.addnewfounder').attr('href',url);
-    $('.addnewfounder').attr('new',#{@resp});
-    $('.addnewfounder').before('<div class="founder foundernew"><input id="add_founders_'+ #{@resp} +'" name="array[addfounders]['+ #{@resp} +']" placeholder="+ Add a Founder" type="text"><div class="removeme"><a href="#" class="btn btn-danger remove-founder"><i class="icon-remove-sign"></i> Remove</a></div></div>');
+  - if @type == "target"
+    :plain
+      var target = $('.taginput').val();
+      if(!target == ""){
+        var target = target.split(",");
+        $('.notags').hide();
+        $('.addnew#{@type}').attr('new',#{@resp});
+        $('.addnew#{@type}').attr('href',url);
+        $('.taginput').val('');
+        for(i=0;i < target.length;i++){
+          $('.tags-#{@type} .clear').before('<div class="tag">'+target[i]+'<input id="array_#{@type}_#{@resp}" name="array[#{@type}][#{@resp}]" value='+target[i]+' type="hidden"></input><a href="#" class="removetag"><i class="icon-remove-sign"></i></a></div>');
+        }
+      }
+  - else
+    :plain
+      $('.addnew#{@type}').attr('new',#{@resp});
+      $('.addnew#{@type}').attr('href',url);
+      $('.addnew#{@type}').before('<div class="#{@type} fieldnew"><input id="add_#{@type}s_'+ #{@resp} +'" name="array[add#{@type}s]['+ #{@resp} +']" placeholder="+ Add a #{@type.capitalize}" type="text"><div class="removeme"><a href="#" class="btn btn-danger remove-field"><i class="icon-remove-sign"></i> Remove</a></div></div>');
 - else
   :plain
     alert('An Error Occurred');

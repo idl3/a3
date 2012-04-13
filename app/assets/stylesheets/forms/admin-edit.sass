@@ -4,12 +4,12 @@
     text-transform: uppercase
     font-weight: bold
     font-size: 11px
-  input, textarea
+  input, textarea, select
     width: 90%
   textarea
     height: 168px
     resize: none
-  .founder
+  .fieldnew
     position: relative
     .btn
       height: 12px
@@ -25,10 +25,42 @@
   .logo
     width: 150px
     height: 150px
+    margin-bottom: 15px
+    img
+      +border-radius(5px)
+      +box-shadow(#999 1px 1px 1px)
 
-.remove-founder
+.taggable
+  .taginput
+    width: 60%
+  .tagadd
+    width: 20%
+    margin-bottom: 8px
+  .tag
+    float: left
+    padding: 4px 24px 4px 6px
+    background: #08C
+    +border-radius(5px)
+    height: 18px
+    margin: 0 5px 5px 0
+    color: white
+    font-weight: bold
+    position: relative
+    .removetag
+      position: absolute
+      right: 5px
+      top: 5px
+
+.remove-btn
   text-transform: uppercase
   font-weight: bold
+
+.formrow
+  margin-bottom: 15px
+  padding-bottom: 15px
+  border-bottom: 1px solid #CCC
+  h2
+    margin-bottom: 10px
 
 .splitform-3quart
   width: 75%

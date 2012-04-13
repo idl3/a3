@@ -1,0 +1,22 @@
+- if @business.send("#{field}s").empty?
+  = text_field_tag "array[add#{field}][0]", nil, :placeholder => "+ Add a #{field.capitalize}"
+  %br
+- else
+  - @business.send("#{field}s").each_index do |c|
+    %div{:class => "#{field} fieldnew"}
+      = text_field_tag "array[#{field}s][#{c}]", @business.send("#{field}s")[c]
+      .removeme
+        = label_tag "remove[#{field}s][#{c}]", :class => "btn btn-danger remove-btn", "data-toggle" => "button" do
+          %i.icon-remove-sign
+          Remove
+        = check_box_tag "remove[#{field}s][#{c}]", @business.send("#{field}s")[c], nil, :class => "removechkbox"
+  %div{:class => "#{field} fieldnew"}
+    = text_field_tag "array[add#{field}s][0]", nil, :placeholder => "+ Add a #{field.capitalize}"
+    .removeme
+      = link_to "#", :class => "btn btn-danger remove-field remove-btn" do
+        %i.icon-remove-sign
+        Remove
+%a{:href => "#{admin_business_addfield_path}?t=#{field}&new=0", "data-remote" => true, :class => "addnew#{field}", :new => "0"}
+  %i.icon-plus
+  = "Add #{field.capitalize}"
+  %br

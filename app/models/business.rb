@@ -9,6 +9,9 @@ class Business < ActiveRecord::Base
   attr_accessor :addnew
   @type = "Business"
   serialize :founders, Array
+  serialize :advisors, Array
+  serialize :competitors, Array
+  serialize :target, Array
 
   def logo
     self.attachments.each do |a|

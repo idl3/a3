@@ -1,12 +1,18 @@
 class Admin::BusinessesController < Admin::BaseController
+  before_filter do
+    INDUSTRIES = pri_industries
+  end
+
   def index
     @businesses = Business.all
     @approved = Business.where(:approved => true)
     @unapproved = Business.where(:approved => false)
+    puts pri_industries
   end
 
   def new
     @business ||= Business.new
+    @pindustries = INDUSTRIES
   end
 
   def create
@@ -30,6 +36,7 @@ class Admin::BusinessesController < Admin::BaseController
       flash[:alert] = "Business does not exist"
       redirect_to admin_businesses_path
     end
+    @pindustries = INDUSTRIES
   end
 
   def update
@@ -45,6 +52,7 @@ class Admin::BusinessesController < Admin::BaseController
       end
       newlogo = Attachment.new(:content => params[:logo], :category => "primarylogo")
     end
+    @business.target = []
     if params[:array]
       if founders = params[:array][:founders]
         @business.founders = []
@@ -55,6 +63,11 @@ class Admin::BusinessesController < Admin::BaseController
       if newfounders = params[:array][:addfounders]
         newfounders.each_value do |nf|
           @business.founders << nf if nf != ""
+        end
+      end
+      if targets = params[:array][:target]
+        targets.each_value do |t|
+          @business.target << t
         end
       end
     end
@@ -115,19 +128,21 @@ class Admin::BusinessesController < Admin::BaseController
   end
 
   def addfield
-    if params[:new]
-      @resp = params[:new]
+    @resp = false
+    if @resp = params[:new]
+      @type = params[:t]
       if (true if Float(@resp) rescue false)
-        @url = "#{params[:id] ? edit_admin_business_path : admin_businesses_path}/addfield?new=#{@resp.to_i+1}"
+        @url = "#{params[:id] ? edit_admin_business_path : admin_businesses_path}/addfield?t=#{@type}&new=#{@resp.to_i+1}"
         @resp = @resp.to_i+1
-      else
-        @resp = false
       end
-    else
-      @resp = false
     end
     respond_to do |format|
       format.js { }
     end
+  end
+
+  private
+  def pri_industries
+    YAML.load_file("config/app/business.yml")["primary_industries"]
   end
 end
