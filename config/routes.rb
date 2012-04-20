@@ -1,7 +1,11 @@
 A3::Application.routes.draw do
-  devise_for :users, :skip => [:sessions, :registrations, :confirmations, :passwords, :unlocks]
+  devise_for :users, :skip => [:sessions, :registrations, :confirmations, :passwords, :unlocks], :controllers => {:omniauth_callbacks => 'users'}
   as :user do
+    get 'auth/:provider' => 'users#omniauth', :as => :user_omniauth_authorize
+    get 'linkedin-callback' => 'users#linkedin', :as => :linkedin_callback
     get 'register' => 'registrations#new', :as => :new_user_registration
+    get 'register/:linkedin_id/:security_string' => 'users#newlinkedin', :as => :linkedin_registration
+    put 'register/:linkedin_id/:security_string' => 'users#createlinkedin'
     post 'register' => 'registrations#create', :as => :user_registration
     get 'cancel' => 'registrations#cancel', :as => :cancel_user_registration
     get 'profile' => 'registrations#edit', :as => :edit_user_registration
@@ -20,6 +24,7 @@ A3::Application.routes.draw do
     delete 'logout' => 'sessions#destroy', :as => :destroy_user_session
   end
 
+  match '/success/:type' => 'posts#success', :as => :success
   match '/businesses' => 'businesses#businesses', :as => :businesses
   post '/businesses' => 'businesses#search', :as => :search_businesses
   match '/business/:id' => 'businesses#business', :as => :business

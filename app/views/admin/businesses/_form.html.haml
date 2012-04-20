@@ -3,9 +3,9 @@
   = stylesheet_link_tag "forms", :media => "all"
 - content_for :js do
   = javascript_include_tag "form"
-.span2
+.span1
   &nbsp;
-.span8
+.span10
   %h1= @business.id.nil? ? 'New Business' : "Edit #{@business.name} ##{@business.id}"
   %br
   = form_for @business, :url => @business.id.nil? ? admin_businesses_path(@page) : admin_business_path(@page), :html => {:class => "well admin-edit", :multipart => true} do |f|
@@ -93,5 +93,5 @@
       = f.label "Approved", :class => "inline"
       = f.submit @business.id.nil? ? "Create" : "Update", :class => "btn btn-primary"
       = link_to "Cancel", admin_businesses_path, :class => "btn"
-.span2
+.span1
   &nbsp;

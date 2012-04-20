@@ -1,0 +1,2 @@
+= form_for @user, url: linkedin_registration_path(@user.linkedin_id,@user.security_string) do |f|
+  = f.text_field :email

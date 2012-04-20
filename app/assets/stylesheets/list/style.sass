@@ -17,6 +17,30 @@
   .content
     position: relative
 
+.ml20
+  margin-left: 20px !important
+
+.sfx
+  height: 60px
+
+.sfbar
+  text-align: center
+  list-style: none
+  display: block
+  padding-bottom: 45px
+  li
+    display: inline-block
+    margin-right: 20px
+    input,select
+      font-size: 14px
+      margin-left: 10px
+    input
+      width: 300px
+      height: 30px
+      padding-left: 10px
+    select
+      height: 40px
+
 .span2 > .thumbnail
   border: none
   +border-radius(7px)
@@ -27,24 +51,50 @@
 
 .thumbnail
   position: relative
-  height: 310px
   background: white
-  h5, p, .btn
-    margin: 4px 0 0 8px
-  .btn
-    width: 50px
-    min-width: 50px
-  a
-    position: absolute
-    bottom: 13px
-  .logo
-    width: 150px
-    height: 150px
-    margin: auto
-    img
-      vertical-align: middle
+  .innerdiv
+    height: 310px
+    display:block
+    &:hover
+      width: 200px
+      left: -15%
+      z-index: 100
+      +border-radius(5px)
+      border: 2px solid #CCC
+      padding: 7px
+      height: 390px
+      margin-top: -8px
+      position: absolute
+      +box-shadow(#999 1px 1px 1px)
+      background: white
+      .cont
+        min-height: 90px
+        height: auto
+    .cont
+      margin: 4px 0 0 8px
+      height: 80px
+      overflow: hidden
+    h5, p, .btn
+      text-align: center
+      margin: 4px 0 0 8px
+    h5
+      font-size: 14px
+      font-weight: 500
+    .btn
+      width: 50px
+      min-width: 50px
+    a
+      position: absolute
+      bottom: 13px
+    .logo
+      width: 150px
+      height: 150px
+      margin: auto
+      img
+        vertical-align: middle
 
 .thumbnails
+  margin-left: 0px !important
   .span2
     min-width: 170px
     margin-left: 10px

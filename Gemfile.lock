@@ -78,6 +78,7 @@ GEM
       activesupport (~> 3.0)
       haml (~> 3.0)
       railties (~> 3.0)
+    hashie (1.2.0)
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
@@ -92,12 +93,25 @@ GEM
       actionpack (>= 3.1)
       less (~> 2.0.7)
     libv8 (3.3.10.4)
+    linkedin (0.2.2)
+      nokogiri (~> 1.4.4)
+      oauth (~> 0.4.0)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.18)
     multi_json (1.1.0)
+    nokogiri (1.4.7)
+    oauth (0.4.5)
+    omniauth (1.1.0)
+      hashie (~> 1.2)
+      rack
+    omniauth-linkedin (0.0.6)
+      omniauth-oauth (~> 1.0.0)
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
     orm_adapter (0.0.7)
     pg (0.13.2)
     polyglot (0.3.3)
@@ -167,6 +181,9 @@ DEPENDENCIES
   haml
   haml-rails
   jquery-rails
+  linkedin
+  omniauth
+  omniauth-linkedin
   pg
   rails (= 3.2.1)
   rmagick

@@ -1,25 +1,40 @@
 - content_for :css do
   = stylesheet_link_tag "list", :media => "all"
-.sidebar.span3
-  = form_tag search_businesses_path, :method => 'get' do
+
+- if false
+  .sidebar.span3
     .span.boxed
       .search-head
         .slogo
         .sbox
-          %h3 Search:
-          = text_field_tag :s, params[:s]
     .span.boxed
       .filter-head
         .sbox
           %h3 Filter By:
           %br
-          = label_tag "Industry"
-          = select(:filter, :industry, @industries)
           %br
           = label_tag "Business Requisite"
-          = select(:filter, :requisite, @requisites)
+.span1.ml20.sfx
+  &nbsp;
+.span10.searchfilter.ml20.sfx
+  .searchform
+    = form_tag search_businesses_path, :method => 'get' do
+      %ul.sfbar
+        %li
+          %h3
+            Search:
+            = text_field_tag :s, params[:s]
+        %li
+          %h3
+            Industry:
+            = select(:filter, :industry, @industries)
+      .clear
+.span1.ml20.sfx
+  &nbsp;
 
-.listing.span9
+.span1.ml20
+  &nbsp;
+.listing.span10.ml20
   - if @businesses.empty?
     Your search has returned no results, try refining your search criteria.
   - else
@@ -27,12 +42,15 @@
       - @businesses.each do |business|
         %li.span2{:id => business.id}
           .thumbnail
-            .logo
-              - if business.logo
-                %img{:src => business.logo }
-              - else
-                %img{:src => "https://s3-ap-southeast-1.amazonaws.com/actatlys-dev/data/0/0.jpg"}
-            %h5= business.name
-            %p{:style => "font-size:12px;"}= truncate(business.uvp, :length => 100)
-            %a.btn.btn-mini{:href => business_path(business.id)} More Info
+            .innerdiv
+              .logo
+                - if business.logo
+                  %img{:src => business.logo }
+                - else
+                  %img{:src => "https://s3-ap-southeast-1.amazonaws.com/actatlys-dev/data/0/0.jpg"}
+              %h5= business.name
+              .cont= truncate(business.uvp, :length => 450)
+              %a.btn.btn-mini{:href => business_path(business.id)} More Info
     .clear
+.span1.ml20
+  &nbsp;

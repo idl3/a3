@@ -1,9 +1,9 @@
 - content_for :css do
   = stylesheet_link_tag "admin", :media => "all"
   = stylesheet_link_tag "forms", :media => "all"
-.span2
+.span1
   &nbsp;
-.span8
+.span10
   = form_for @article, :url => @article.id.nil? ? admin_articles_path(@page) : admin_article_path(@article), :html => {:class => "well admin-edit"} do |f|
     %h3= "#{@article.id.nil? ? 'New' : 'Edit'} Article"
     = f.label "Title"
@@ -24,5 +24,5 @@
     = f.label "Published", :class => "inline"
     = f.submit @article.id.nil? ? "Create" : "Update", :class => "btn btn-primary"
     = link_to "Cancel", admin_articles_path, :class => "btn"
-.span2
+.span1
   &nbsp;
