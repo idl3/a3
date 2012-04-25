@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :businesses
   has_many :posts, :as => :postable
   serialize :roles
+  serialize :meta, Hash
 
   def role?(role)
     self.roles.include?(role)
@@ -35,15 +36,15 @@ class User < ActiveRecord::Base
       signed_in_resource.save
       signed_in_resource
     else
+      require 'securerandom'
+      security_string = SecureRandom.hex(16)
       if user = self.find_by_linkedin_id(linkedin_id)
         puts "Found user"
+        user.update_attribute(:security_string, security_string)
         user
       else
         puts "User not found"
-        require 'securerandom'
-        security_string = SecureRandom.hex(16)
         newuser = self.new(:password => Devise.friendly_token[0,20], :linkedin_id => linkedin_id, :security_string => security_string)
-        newuser.inspect
         newuser.save(:validate => false)
         newuser
       end

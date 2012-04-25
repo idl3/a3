@@ -33,6 +33,6 @@ gem 'rmagick'
 # Authentication/Authorization
 gem 'devise'
 gem 'cancan'
-gem 'linkedin'
+gem 'linkedin', :git => "git://github.com/pengwynn/linkedin.git"
 gem 'omniauth'
 gem 'omniauth-linkedin'

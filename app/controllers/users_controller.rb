@@ -19,15 +19,10 @@ class UsersController < Devise::OmniauthCallbacksController
     atoken,asecret = client.authorize_from_request(session[:rtoken],session[:rsecret],pin)
     client.authorize_from_access(atoken,asecret)
     session[:client] = client
-    puts "PIN - #{pin}, ASECRET - #{asecret}, ATOKEN - #{atoken}"
-    puts client.inspect
-    puts client.profile
-    clientData = client.profile
+    clientData = client.profile(id: nil, fields: ['first-name','last-name','site-standard-profile-request','public-profile-url','picture-url'])
 
-    #Find or create user based on linkedin id
     @user = User.find_for_linkedin_oauth(clientData, current_user)
-    puts "INSPECTING USER \n ==================="
-    puts @user.inspect
+    @user.update_attribute(:meta, {picture_url: clientData.picture_url})
     unless @user.email.blank?
       flash[:success] = "Signed in successfully with Linkedin"
       sign_in_and_redirect @user, :event => :authentication
@@ -40,7 +35,8 @@ class UsersController < Devise::OmniauthCallbacksController
   def newlinkedin
     @user = User.find_by_linkedin_id(params[:linkedin_id])
     unless @user and @user.security_string == params[:security_string]
-      redirect_to '/404'
+      flash[:alert] = "Page does not exist"
+      redirect_to root_path
     end
   end
 
@@ -49,6 +45,8 @@ class UsersController < Devise::OmniauthCallbacksController
     if @user.security_string == params[:security_string]
       @user.email = params[:user][:email]
       if @user.save
+        require 'securerandom'
+        @user.update_attribute(:security_string, SecureRandom.hex(16))
         flash[:success] = "Successfully completed linkedin signup!"
         sign_in_and_redirect @user, :event => :authentication
       else
