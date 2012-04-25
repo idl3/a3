@@ -1,42 +1,62 @@
 :css
-  .well input {
-    width: 90%;
+  .formit {
+    width: 50%;
+    background: white;
+    padding: 30px;
+    margin-top: -40px;
+    box-shadow: 1px 1px 1px gray;
+    border-radius: 5px;
   }
-  div i {
-    font-size: 11px;
+  .formit .field input {
+    width: 60%;
+    padding-left:5%;
+    height: 35px;
+    font-size: 18px;
+    font-weight: 300;
+  }
+  .formit .submit input{
+    width: 200px;
+    height: 35px;
+    font-size: 18px;
+    font-weight: 300;
+  }
+  .formedit div i {
+    font-size: 12px;
     font-style: italic;
   }
+  .formedit{
+  }
+.formedit{align: "center"}
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "formit" }) do |f|
+    = devise_error_messages!
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "well" }) do |f|
-  %h2= "Edit #{resource_name.to_s.humanize}"
-  = devise_error_messages!
+    %h2= "Edit #{resource_name.to_s.humanize}"
+    .field
+      = f.label :email
+      = f.email_field :email
 
-  %div
-    = f.label :email
-    = f.email_field :email
+    .field
+      = f.label :password, "New Password"
+      %i (leave blank if you don't want to change it)
+      %br
+      = f.password_field :password, :autocomplete => "off"
 
-  %div
-    = f.label :password
-    %i (leave blank if you don't want to change it)
+    .field
+      = f.label :password_confirmation, "New Password Confirmation"
+      = f.password_field :password_confirmation
+
+    .field
+      = f.label :current_password
+      %i (we need your current password to confirm your changes)
+      %br
+      = f.password_field :current_password
+
+    .submit
+      = f.submit "Update", :class => "btn btn-primary"
     %br
-    = f.password_field :password, :autocomplete => "off"
+    %h3 Cancel my account
 
-  %div
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation
+    %p
+      =raw "Unhappy? #{link_to 'Cancel my account', registration_path(resource_name), :confirm => 'Are you sure?', :method => :delete}."
 
-  %div
-    = f.label :current_password
-    %i (we need your current password to confirm your changes)
-    %br
-    = f.password_field :current_password
-
-  %div
-    = f.submit "Update", :class => "btn btn-primary"
-  %br
-  %h3 Cancel my account
-
-  %p
-    =raw "Unhappy? #{link_to 'Cancel my account', registration_path(resource_name), :confirm => 'Are you sure?', :method => :delete}."
-
-  = link_to "Back", :back
+    = link_to "Back", :back

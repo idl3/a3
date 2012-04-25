@@ -8,11 +8,12 @@
       %a.brand{:href => "/"}
         %img{:src => "/assets/logo.png"}
       .container.nav-collapse
-        %ul.nav
+        %ul.nav{style: "float:left;"}
           %li.divider-vertical
           %li= link_to "Businesses", businesses_path
-          %li.divider-vertical
-          %li= link_to "People", people_path
+          - if false
+            %li.divider-vertical
+            %li= link_to "People", people_path
           %li.divider-vertical
           %li= link_to "About", page_path("about")
           %li.divider-vertical
@@ -25,23 +26,27 @@
         %ul.nav{:style => "float:right"}
           - if user_signed_in?
             %li.divider-vertical
+            %li{:style => "width: auto"}
+              .avatar
+                = image_tag current_user.meta[:picture_url]
             %li.btn-group.profilebtn.drowndown{:id => "profiledrop", :style => "box-shadow: none;margin-top: 0px;"}
               %a.profiledrop{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"}
                 Account
                 %span.caret
               %ul.dropdown-menu.profilemenu
-                %li
-                  %a{:href => edit_user_registration_path}
-                    %i.icon-pencil
-                    Edit Profile
-                %li
-                  %a{:href => "#"}
-                    %i.icon-heart
-                    My Contributions
-                %li
-                  %a{:href => destroy_user_session_path, "data-method" => :delete}
-                    %i.icon-off
-                    Log Out
+                .menulist
+                  %li
+                    %a{:href => edit_user_registration_path}
+                      %i.icon-pencil
+                      Edit Profile
+                  %li
+                    %a{:href => "#"}
+                      %i.icon-heart
+                      My Contributions
+                  %li
+                    %a{:href => destroy_user_session_path, "data-method" => :delete}
+                      %i.icon-off
+                      Log Out
             %li.divider-vertical
           - else
             %li.divider-vertical

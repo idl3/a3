@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_linkedin_oauth(user_profile, signed_in_resource=nil)
-    userString = user_profile.site_standard_profile_request.sub 'http://www.linkedin.com/profile?viewProfile=&key=', ''
+    userString = user_profile.site_standard_profile_request.url.sub 'http://www.linkedin.com/profile?viewProfile=&key=', ''
     i = 0
     until userString[i+1] == '&' do i += 1 end
     linkedin_id = userString[0..i]

@@ -23,11 +23,12 @@
         %li
           %h3
             Search:
-            = text_field_tag :s, params[:s]
-        %li
-          %h3
-            Industry:
-            = select(:filter, :industry, @industries)
+            = text_field_tag :s, params[:s], placeholder: "               Search for a Business"
+        - if false
+          %li
+            %h3
+              Industry:
+              = select(:filter, :industry, @industries)
       .clear
 .span1.ml20.sfx
   &nbsp;
