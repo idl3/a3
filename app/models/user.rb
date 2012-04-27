@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
         user
       else
         puts "User not found"
-        newuser = self.new(:password => Devise.friendly_token[0,20], :linkedin_id => linkedin_id, :security_string => security_string)
+        newuser = self.new(:password => Devise.friendly_token[0,20], :linkedin_id => linkedin_id, :security_string => security_string, email: "#{linkedin_id}@actatlys.com")
         newuser.save(:validate => false)
         newuser
       end
