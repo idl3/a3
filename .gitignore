@@ -14,8 +14,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+/deploy.log
 
 # Ignore all uploads
 /public/uploads
 /public/assets
 /.sass-cache
+
