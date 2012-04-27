@@ -10,8 +10,8 @@
   %br
   = form_for @business, :url => @business.id.nil? ? admin_businesses_path(@page) : admin_business_path(@page), :html => {:class => "well admin-edit", :multipart => true} do |f|
     .formrow
-      %h2 Business Description
       .splitform-half
+        %h2 Business Description
         = f.label "Name"
         = f.text_field :name
         %br
@@ -26,17 +26,24 @@
         = f.label "Unique Value Proposition"
         = f.text_area :uvp
         %br
+        = f.label :mission
+        = f.text_area :mission, style: "height: 80px;"
+        %br
         = f.label "What we are in a nutshell!"
         = f.text_field :nutshell
       .splitform-half
-        = f.label "Registration Number"
-        = f.text_field :regno
-        %br
-        = f.label "Founded On"
-        = select_year(@business.founded ? @business.founded : Time.now, :start_year => Date.today.year, :end_year => 2000, :field_name => "founded", :prefix => "business")
-        %br
+        %h2 Business Info
+        = f.label "Business Type"
+        = f.select :biztype, @biztypes
         = f.label "Industry"
         = f.select :industrypri, @pindustries
+        = f.label "Founded On"
+        = select_year(@business.founded ? @business.founded : Time.now, :start_year => Date.today.year, :end_year => 2000, :field_name => "founded", :prefix => "business")
+        = f.label "Registration Number"
+        = f.text_field :regno
+        = f.label "Revenue Model"
+        = f.text_field :revenuemodel
+        %br
         .taggable
           = f.label "Target Market"
           = text_field_tag "addnewtarget", nil, :class => "taginput"
@@ -56,20 +63,29 @@
               .clear
 
         %br
-        = f.label "Competitors"
-        = render "addmore", :field => "competitor"
+        %h2 Entities
+        = f.label "Founders"
+        = render 'addmore', field: "founder"
+        %br
+        = f.label "Number of Staff"
+        = f.select :staffno, @staffno
+        %br
+        = f.label "Key Staff"
+        = render 'addmore', field: "keystaff"
         %br
         = f.label "Advisors"
-        = render 'addmore', :field => "advisor"
+        = render 'addmore', field: "advisor"
         %br
-        = f.label "Founders"
-        = render 'addmore', :field => "founder"
+        = f.label "Investors"
+        = render 'addmore', field: "investor"
         %br
+        = f.label "Competitors"
+        = render "addmore", field: "competitor"
       .clear
 
     .formrow
-      %h2 Contact Information
       .splitform-half
+        %h2 Contact Information
         = f.label "Phone Number"
         = text_field_tag "contact[phone]", @business.contact ? @business.contact.phone : nil
         %br
@@ -85,7 +101,7 @@
         = f.label "Facebook"
         = text_field_tag "contact[facebook]", @business.contact ? @business.contact.facebook : nil
       .splitform-half
-        &nbsp;
+        %h2 Media
       .clear
 
     .end

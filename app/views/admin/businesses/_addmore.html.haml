@@ -1,17 +1,20 @@
-- if @business.send("#{field}s").empty?
-  = text_field_tag "array[add#{field}][0]", nil, :placeholder => "+ Add a #{field.capitalize}"
+- fields = field
+- fields = fields + 's' unless field == "keystaff"
+- puts field
+- if Array(@business.send("#{fields}")).empty?
+  = text_field_tag "add[#{fields}][0]", nil, :placeholder => "+ Add a #{field.capitalize}"
   %br
 - else
-  - @business.send("#{field}s").each_index do |c|
+  - Array(@business.send("#{fields}")).each_index do |c|
     %div{:class => "#{field} fieldnew"}
-      = text_field_tag "array[#{field}s][#{c}]", @business.send("#{field}s")[c]
+      = text_field_tag "array[#{fields}][#{c}]", @business.send("#{fields}")[c]
       .removeme
-        = label_tag "remove[#{field}s][#{c}]", :class => "btn btn-danger remove-btn", "data-toggle" => "button" do
+        = label_tag "remove[#{fields}][#{c}]", :class => "btn btn-danger remove-btn", "data-toggle" => "button" do
           %i.icon-remove-sign
           Remove
-        = check_box_tag "remove[#{field}s][#{c}]", @business.send("#{field}s")[c], nil, :class => "removechkbox"
+        = check_box_tag "remove[#{fields}][#{c}]", @business.send("#{fields}")[c], nil, :class => "removechkbox"
   %div{:class => "#{field} fieldnew"}
-    = text_field_tag "array[add#{field}s][0]", nil, :placeholder => "+ Add a #{field.capitalize}"
+    = text_field_tag "add[#{fields}][0]", nil, :placeholder => "+ Add a #{field.capitalize}"
     .removeme
       = link_to "#", :class => "btn btn-danger remove-field remove-btn" do
         %i.icon-remove-sign

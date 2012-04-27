@@ -1,18 +1,15 @@
 class Admin::BusinessesController < Admin::BaseController
-  before_filter do
-    INDUSTRIES = pri_industries
-  end
-
   def index
     @businesses = Business.all
     @approved = Business.where(:approved => true)
     @unapproved = Business.where(:approved => false)
-    puts pri_industries
   end
 
   def new
     @business ||= Business.new
-    @pindustries = INDUSTRIES
+    @pindustries = pri_industries
+    @biztypes = biz_types
+    @staffno = staff_no
   end
 
   def create
@@ -36,7 +33,9 @@ class Admin::BusinessesController < Admin::BaseController
       flash[:alert] = "Business does not exist"
       redirect_to admin_businesses_path
     end
-    @pindustries = INDUSTRIES
+    @pindustries = pri_industries
+    @biztypes = biz_types
+    @staffno = staff_no
   end
 
   def update
@@ -54,34 +53,33 @@ class Admin::BusinessesController < Admin::BaseController
     end
     @business.target = []
     if params[:array]
-      if founders = params[:array][:founders]
-        @business.founders = []
-        founders.each_value do |f|
-          @business.founders << f
+      params[:array].each_key do |k|
+        @business[k] = []
+        params[:array][k].try(:each_value) do |e|
+          @business[k] << e unless e.blank?
         end
       end
-      if newfounders = params[:array][:addfounders]
-        newfounders.each_value do |nf|
-          @business.founders << nf if nf != ""
-        end
-      end
-      if targets = params[:array][:target]
-        targets.each_value do |t|
-          @business.target << t
+    end
+    if params[:add]
+      params[:add].each_key do |k|
+        params[:add][k].try(:each_value) do |e|
+          @business[k] << e unless e.blank?
         end
       end
     end
     if params[:remove]
-      if remove = params[:remove][:founders]
-        puts "Names to Remove: #{remove}"
-        if current = @business.founders
-          new = []
-          puts current
-          remove.each_value do |r|
-            @business.founders.delete(r) if current.include?(r)
+      if remove = params[:remove]
+        remove.each_key do |k|
+          puts "Names to Remove: #{remove}"
+          if current = @business.send(k)
+            new = []
+            puts current
+            remove.each_value do |r|
+              @business.send(k).delete(r) if current.include?(r)
+            end
+            @business.send(k).compact.reject(&:blank?)
+            puts @business.send(k).inspect
           end
-          @business.founders.compact.reject(&:blank?)
-          puts @business.founders.inspect
         end
       end
     end
@@ -131,6 +129,8 @@ class Admin::BusinessesController < Admin::BaseController
     @resp = false
     if @resp = params[:new]
       @type = params[:t]
+      @types = @type
+      @types = @type + 's' unless @type == "keystaff"
       if (true if Float(@resp) rescue false)
         @url = "#{params[:id] ? edit_admin_business_path : admin_businesses_path}/addfield?t=#{@type}&new=#{@resp.to_i+1}"
         @resp = @resp.to_i+1
@@ -143,6 +143,14 @@ class Admin::BusinessesController < Admin::BaseController
 
   private
   def pri_industries
-    YAML.load_file("config/app/business.yml")["primary_industries"]
+    Array.new(YAML.load_file("config/app/business.yml")["primary_industries"].map{|x,y| [y,x] })
+  end
+
+  def biz_types
+    Array.new(YAML.load_file("config/app/business.yml")["business_types"].map{|x,y| [y,x] })
+  end
+
+  def staff_no
+    Array.new(YAML.load_file("config/app/business.yml")["staff_no"].map{|x,y| [y,x] })
   end
 end

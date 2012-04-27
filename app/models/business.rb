@@ -12,6 +12,8 @@ class Business < ActiveRecord::Base
   serialize :advisors, Array
   serialize :competitors, Array
   serialize :target, Array
+  serialize :investors, Array
+  serialize :keystaff, Array
 
   def logo
     self.attachments.each do |a|

@@ -1,3 +1,38 @@
 primary_industries:
-  1: All
+  1: I Don't Know
+  2: Advertising / PR
+  3: Bio-Tech
+  4: Clean-Tech
+  5: Electronics / Device
+  6: Consumer Web
+  7: eCommerce
+  8: Education
+  9: Games
+  10: Video & Entertainment
+  11: Legal
+  12: Mobile
+  13: Communications
+  14: Search
+  15: Software
+  16: Travel
+  17: Physical Retail
+  18: Food & Beverage
+  19: Professional Services
+  20: Content Provider
+  21: IT Solutions
+  22: Others
 
+business_types:
+  1: I Don't Know
+  2: Sole Propietor
+  3: Partnership
+  4: Private Limited
+  5: Public Limited
+
+staff_no:
+  1: I Don't Know
+  2: Less than 5
+  3: 6 to 25
+  4: 26 to 100
+  5: 101 to 200
+  6: Above 200
