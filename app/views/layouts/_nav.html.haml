@@ -26,9 +26,10 @@
         %ul.nav{:style => "float:right"}
           - if user_signed_in?
             %li.divider-vertical
-            %li{:style => "width: auto"}
-              .avatar
-                = image_tag current_user.meta[:picture_url]
+            - unless current_user.meta[:picture_url].blank?
+              %li{:style => "width: auto"}
+                .avatar
+                  = image_tag current_user.meta[:picture_url]
             %li.btn-group.profilebtn.drowndown{:id => "profiledrop", :style => "box-shadow: none;margin-top: 0px;"}
               %a.profiledrop{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"}
                 Account
