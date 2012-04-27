@@ -1,0 +1,14 @@
+%h1
+  .header
+    = link_to "The Blog", "/blog"
+  .menu{:style => "float:right;font-size:16px;margin-top:4px;font-weight: 300"}
+    %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
+      %li.active
+        %a{:href => "/blog"} All
+      %li
+        %a{:href => "/blog/c/actatlys"} Actatlys
+      %li
+        %a{:href => "/blog/c/startups"} Startups
+      %li
+        %a{:href => "/blog/c/business"} Business
+  .clear

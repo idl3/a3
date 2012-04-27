@@ -1,71 +1,25 @@
-:css
-  .blogblock{
-    border-radius: 5px;
-    background: #EEE;
-    padding: 15px;
-    margin-bottom: 25px;
-    box-shadow: 1px 1px 1px gray;
-  }
-  .bloghead{
-    background: #BFBFBF;
-  }
-  b{
-    font-weight: bold;
-  }
-  .bphead{
-    border-bottom: 1px solid #DDD;
-    padding-bottom: 6px;
-    margin-bottom: 6px;
-  }
-  .bpimg, .bpbody{
-    float: left;
-  }
-  .bpimg {
-    width: 23%;
-    margin-right: 2%;
-  }
-  .bpimg img{
-    border-radius: 5px;
-  }
-  .bpbody{
-    width: 75%;
-    word-break: break-word;
-  }
-  .clear{
-    clear:both;
-  }
+- content_for :js do
+  :javascript
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'actatlys'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+- content_for :css do
+  = stylesheet_link_tag "pages/blog/blog", media: "all"
 .span1
   &nbsp;
 .span7
-  .blogblock.bloghead
-    %h1
-      .header{:style => "float:left;font-weight: 300;font-size:36px"}
-        The Blog
-      .menu{:style => "float:right;font-size:16px;margin-top:4px;font-weight: 300"}
-        %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
-          %li.active
-            %a{:href => "/blog"} All Posts
-          %li
-            %a{:href => "/blog/c/actatlys"} Actatlys
-          %li
-            %a{:href => "/blog/c/startups"} Startups
-          %li
-            %a{:href => "/blog/c/business"} Business
-      .clear
+  .blogblock.bloghead= render "bloghead"
   .blogblock
     - if @articles.count > 0
       - @articles.each do |a|
-        .blogpost{:id => "article-#{a.id}"}
-          .bpimg
-            = image_tag a.leadimage? ? a.leadimage : a.defaultimage, width: 150
-          .bpbody
-            .bphead
-              %h2
-                %a{:href => article_path(a.name)}= a.title
-              %span{:style => "font-style:italic;"}=raw a.updated_at.strftime("Article posted on <b>%m/%d/%Y %I:%M%p</b> by <b>#{User.find_by_id(a.author).name}</b>")
-            .body=raw truncate(a.body, :length => 250, :omission => "<i style='font-style:italic'> ... <a href=#{article_path(a.name)}>read more</a></i>")
-          .clear
-          %br
+        = render "articles", a: a
     - else
       There are no articles matching your criteria!
 .span3

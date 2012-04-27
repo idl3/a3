@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :banned, :name, :linkedin_id, :security_string
   has_one :person
   has_many :businesses
+  has_many :contributions
   has_many :posts, :as => :postable
   serialize :roles
   serialize :meta, Hash

@@ -1,36 +1,13 @@
-:css
-  .blogblock{
-    border-radius:5px;
-    background: #EEE;
-    padding: 15px;
-    margin-bottom: 25px;
-  }
-  .bloghead{
-    background: #BFBFBF;
-  }
+- content_for :css do
+  = stylesheet_link_tag "pages/blog/blog", media: "all"
 .span1
   &nbsp;
 .span7
-  .blogblock.bloghead
-    %h1= "The Blog : #{@category.name}"
-    %br
-    .menu
-      %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
-        %li
-          %a{:href => "/blog"} All Posts
-        %li{:class => params[:name] == "actatlys" ? "active" : nil }
-          %a{:href => "/blog/c/actatlys"} Actatlys
-        %li{:class => params[:name] == "startups" ? "active" : nil }
-          %a{:href => "/blog/c/startups"} Startups
-        %li{:class => params[:name] == "business" ? "active" : nil }
-          %a{:href => "/blog/c/business"} Business
+  .blogblock.bloghead= render "bloghead"
   .blogblock
     - if @category.articles.count > 0
       - @category.articles.each do |a|
-        .article{:id => "article-#{a.id}"}
-          %h2
-            %a{:href => article_path(a.name)}= a.title
-          .article-body=raw truncate(a.body, :length => 250, :omission => "<i style='font-style:italic'> ... <a href=#{article_path(a.name)}>read more</a></i>")
+        = render "articles", a: a
     - else
       There are no posts in this category
 .span3

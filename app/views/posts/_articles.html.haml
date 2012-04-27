@@ -1,0 +1,12 @@
+.blogpost{:id => "article-#{a.id}"}
+  .bpimg
+    = image_tag a.leadimage? ? a.leadimage : a.defaultimage, width: 150
+  .bpbody
+    .bphead
+      %h2
+        %a{href: article_path(a.name)}= a.title
+      %span{:style => "font-style:italic;"}=raw a.updated_at.strftime("Article posted on <b>%m/%d/%Y %I:%M%p</b> by <b>#{User.find_by_id(a.author).name}</b>")
+    .body=raw truncate(a.body, :length => 250, :omission => "<i style='font-style:italic'> ... <a href=#{article_path(a.name)}>read more</a></i>")
+    %a{id: "disqus_thread", href: article_path(a.name)+"#disqus_thread", "data-disqus-identifier" => "article-id-#{a.id}"}
+  .clear
+  %br

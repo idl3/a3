@@ -44,6 +44,6 @@ class Dash::DashPresenter
   end
 
   def linkedinusers
-    User.where(:linkedinid => nil).count
+    User.count - User.where(:linkedin_id => nil).count
   end
 end

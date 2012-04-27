@@ -29,6 +29,9 @@
             %h3
               Industry:
               = select(:filter, :industry, @industries)
+          %li
+            %h3
+              = link_to "Contribute a Business", contribute_business_path, remote: true, class: "btn btn-primary contributebiz"
       .clear
 .span1.ml20.sfx
   &nbsp;

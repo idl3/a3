@@ -1,29 +1,9 @@
-:css
-  .blogblock{
-    border-radius:5px;
-    background: #EEE;
-    padding: 15px;
-    margin-bottom: 25px;
-  }
-  .bloghead{
-    background: #BFBFBF;
-  }
+- content_for :css do
+  = stylesheet_link_tag "pages/blog/blog", media: "all"
 .span1
   &nbsp;
 .span7
-  .blogblock.bloghead
-    %h1 The Blog
-    %br
-    .menu
-      %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
-        %li.active
-          %a{:href => "/blog"} All Posts
-        %li
-          %a{:href => "/blog/c/actatlys"} Actatlys
-        %li
-          %a{:href => "/blog/c/startups"} Startups
-        %li
-          %a{:href => "/blog/c/business"} Business
+  .blogblock.bloghead= render "bloghead"
   .blogblock
     - if @categories.count > 0
       - @categories.each do |c|

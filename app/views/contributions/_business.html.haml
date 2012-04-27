@@ -1,0 +1,14 @@
+.modal#myModal.businessmodal
+  = form_for @contribution, url: contribute_business_path do |f|
+    .modal-header
+      %button.close{"data-dismiss"=>"modal"} ×
+      %h3 Contribute a Business!
+    .modal-body
+      = f.label :name, "Name of Business"
+      = f.text_field :name
+      %br
+      = label_tag ""
+      %br
+    .modal-footer
+      %a.btn{href: "#","data-dismiss"=>"modal"} Close
+      = f.submit class: "btn btn-primary"

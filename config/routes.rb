@@ -30,7 +30,8 @@ A3::Application.routes.draw do
   match '/business/:id' => 'businesses#business', :as => :business
   match '/people' => 'people#people', :as => :people
   match '/person/:id' => 'people#person', :as => :person
-  match '/businesses/contribute' => 'contributions#businesses', :as => :contribute_business
+  match '/businesses/contribute' => 'contributions#business', :as => :contribute_business
+  post '/businesses/contribute' => 'contributions#contribiz'
   match '/people/contribute' => 'contributions#people', :as => :contribute_person
 
   namespace :admin do

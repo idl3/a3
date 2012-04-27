@@ -3,7 +3,12 @@ class ContributionsController < ApplicationController
 
   end
 
-  def create
+  def createbiz
 
+  end
+
+  def business
+    @contribution = Contribution.new
+    @contribution.type = "Business"
   end
 end

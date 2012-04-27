@@ -1,34 +1,19 @@
-:css
-  .blogblock{
-    border-radius:5px;
-    background: #EEE;
-    padding: 15px;
-    margin-bottom: 25px;
-    box-shadow: 1px 1px 1px gray;
-  }
-  .bloghead{
-    background: #BFBFBF;
-  }
+- content_for :css do
+  = stylesheet_link_tag "pages/blog/blog", media: "all"
 .span1
   &nbsp;
 .span7
-  .blogblock.bloghead
-    %h1= "The Blog : #{@article.title}"
-    %br
-    .menu
-      %ul.nav.nav-pills{:style => "margin-bottom: 0px;"}
-        %li{:class => @article.category_id == nil ? "active" : nil}
-          %a{:href => "/blog"} All Posts
-        %li{:class => @article.category_id == 1 ? "active" : nil}
-          %a{:href => "/blog/c/actatlys"} Actatlys
-        %li{:class => @article.category_id == 2 ? "active" : nil}
-          %a{:href => "/blog/c/startups"} Startups
-        %li{:class => @article.category_id == 3 ? "active" : nil}
-          %a{:href => "/blog/c/business"} Business
+  .blogblock.bloghead= render "bloghead"
   .blogblock
-    .blog{:id => "article-#{@article.id}"}
+    .blog{:id => "article-#{@article.id}", "disqus-identifier" => "article-id-#{@article.id}"}
       %h2= @article.title
       .body=raw @article.body
+      %br
+      .div{:id => "disqus_thread"}
+      %a{href:"http://disqus.com", class: "dsq-brlink"}
+        blog comments powered by
+        %span{class: "logo-disqus"}
+          Disqus
 .span3
   .rightside
     %h1 Twitter
@@ -62,3 +47,17 @@
 
 .span1
   &nbsp;
+:javascript
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'actatlys'; // required: replace example with your forum shortname
+  var disqus_title = '#{@article.title}';
+  var disqus_developer = 1; // developer mode is on
+  var disqus_identifier = 'article-id-#{@article.id}';
+  var disqus_url = 'http://0.0.0.0:3000#{article_path(@article)}';
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
