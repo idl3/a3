@@ -1,2 +1,11 @@
-= form_for @user, url: linkedin_registration_path(@user.linkedin_id,@user.security_string) do |f|
-  = f.text_field :email
+.span3
+  &nbsp;
+.span6
+  %h2 You are Sign Up is almost complete!
+  Enter an email address to complete your registration with us!
+  = form_for @user, url: linkedin_registration_path(@user.linkedin_id,@user.security_string) do |f|
+    = f.label :email,
+    = f.text_field :email
+    = f.submit "Complete Registration", class: "btn btn-primary"
+.span3
+  &nbsp;

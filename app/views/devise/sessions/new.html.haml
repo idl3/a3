@@ -44,6 +44,10 @@
 
 .social
   .containform
-    %h2 Login with
+    %h2 Social Media
     %br
-    = link_to "Sign in with Linkedin", user_omniauth_authorize_path(:linkedin)
+    = link_to user_omniauth_authorize_path(:linkedin), class: "btn" do
+      .btntext{style: "float:left;line-height: 24px;margin-right:10px"}
+        Sign In with
+      .btnimg{style: "float:right;height: 24px;"}= image_tag "linkedin.png"
+      .clear{style: "clear:both;"}
