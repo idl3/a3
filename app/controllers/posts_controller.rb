@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
+  before_filter :latest_articles, only: [:article, :articles, :category, :categories]
 
   def index
     @page = Page.find_by_name("home")
-    render :layout => "index"
+    render layout: "index"
   end
 
   def page
@@ -21,7 +22,7 @@ class PostsController < ApplicationController
   end
 
   def articles
-    @articles = Article.where(:published => true).reverse
+    @articles = Article.where(published: true).reverse
   end
 
   def categories
@@ -33,6 +34,10 @@ class PostsController < ApplicationController
       flash[:alert] = "Category '#{params[:name]}' does not exist"
       redirect_to categories_path
     end
+  end
+
+  def latest_articles
+    @latest = Article.where(published: true).reverse
   end
 
 end

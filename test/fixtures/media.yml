@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  business_id: 1
+  press: MyText
+  videos: MyText
+  photos: MyText
+
+two:
+  business_id: 1
+  press: MyText
+  videos: MyText
+  photos: MyText

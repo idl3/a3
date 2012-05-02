@@ -21,12 +21,13 @@
           %li.divider-vertical
           %li= link_to "Contact", page_path("contact")
           %li.divider-vertical
-          %li= link_to "Support", page_path("support")
-          %li.divider-vertical
+          - if false
+            %li= link_to "Support", page_path("support")
+            %li.divider-vertical
         %ul.nav{:style => "float:right"}
           - if user_signed_in?
             %li.divider-vertical
-            - unless current_user.meta[:picture_url].blank?
+            - unless current_user.meta[:picture_url]
               %li{:style => "width: auto"}
                 .avatar
                   = image_tag current_user.meta[:picture_url]

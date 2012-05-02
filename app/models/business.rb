@@ -1,13 +1,15 @@
 class Business < ActiveRecord::Base
   belongs_to :user
-  has_one :contact, :as => :contactable, :dependent => :destroy
-  has_many :attachments, :as => :attachable, :dependent => :destroy
+  has_one :contact, as: :contactable, dependent: :destroy
+  has_one :media, dependent: :destroy
+  has_many :attachments, as: :attachable, dependent: :destroy
   attr_protected :id
   accepts_nested_attributes_for :attachments
   accepts_nested_attributes_for :contact
   class << self; attr_accessor :type end
   attr_accessor :addnew
   @type = "Business"
+  serialize :contact, Hash
   serialize :founders, Array
   serialize :advisors, Array
   serialize :competitors, Array

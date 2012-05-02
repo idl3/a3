@@ -1,8 +1,8 @@
 class Admin::BusinessesController < Admin::BaseController
   def index
-    @businesses = Business.all
-    @approved = Business.where(:approved => true)
-    @unapproved = Business.where(:approved => false)
+    @businesses = Business.paginate(page: params[:paginate])
+    @approved = Business.where(approved: true).paginate(page: params[:paginate])
+    @unapproved = Business.where(approved: false).paginate(page: params[:paginate])
   end
 
   def new
@@ -14,8 +14,41 @@ class Admin::BusinessesController < Admin::BaseController
 
   def create
     @business = Business.new(params[:business])
+    @business.build_media
+    if params[:array]
+      params[:array].each_key do |k|
+        if %w(photos videos press).include?(k)
+          @business.media[k] = []
+        else
+          @business[k] = []
+        end
+        params[:array][k].try(:each_value) do |e|
+          if %w(photos videos press).include?(k)
+            @business.media[k] << e unless e.blank?
+          else
+            @business[k] << e unless e.blank?
+          end
+        end
+      end
+    end
+    if params[:add]
+      params[:add].each_key do |k|
+        params[:add][k].try(:each_value) do |e|
+          if %w(press videos photos).include?(k)
+            puts "Adding #{e} into #{k}"
+            @business.media[k] << e unless e.blank?
+            @business.media.save
+          else
+            @business[k] << e unless e.blank?
+          end
+        end
+      end
+    end
+    if params[:contact]
+      @business.contact = Contact.new(params[:contact])
+    end
     if @business.save
-      @business.attachments << Attachment.new(:content => params[:logo], :category => "primarylogo")
+      @business.attachments << Attachment.new(:content => params[:logo], :category => "primarylogo") if params[:logo]
       if @business.save
         flash[:success] = "Successfully created the new business '#{@business.name}'"
       else
@@ -33,6 +66,7 @@ class Admin::BusinessesController < Admin::BaseController
       flash[:alert] = "Business does not exist"
       redirect_to admin_businesses_path
     end
+    @business.build_media unless @business.media
     @pindustries = pri_industries
     @biztypes = biz_types
     @staffno = staff_no
@@ -40,6 +74,7 @@ class Admin::BusinessesController < Admin::BaseController
 
   def update
     @business = Business.find_by_id(params[:id])
+    @business.build_media unless @business.media
     @business.attributes = params[:business]
     if params[:logo]
       attachments = Attachment.where(:attachable_id => @business.id, :attachable_type => "Business", :category => "primarylogo")
@@ -54,31 +89,56 @@ class Admin::BusinessesController < Admin::BaseController
     @business.target = []
     if params[:array]
       params[:array].each_key do |k|
-        @business[k] = []
+        if %w(photos videos press).include?(k)
+          @business.media[k] = []
+        else
+          @business[k] = []
+        end
         params[:array][k].try(:each_value) do |e|
-          @business[k] << e unless e.blank?
+          if %w(photos videos press).include?(k)
+            @business.media[k] << e unless e.blank?
+          else
+            @business[k] << e unless e.blank?
+          end
         end
       end
     end
     if params[:add]
       params[:add].each_key do |k|
         params[:add][k].try(:each_value) do |e|
-          @business[k] << e unless e.blank?
+          if %w(press videos photos).include?(k)
+            puts "Adding #{e} into #{k}"
+            @business.media[k] << e unless e.blank?
+            @business.media.save
+          else
+            @business[k] << e unless e.blank?
+          end
         end
       end
     end
     if params[:remove]
-      if remove = params[:remove]
-        remove.each_key do |k|
-          puts "Names to Remove: #{remove}"
-          if current = @business.send(k)
-            new = []
-            puts current
-            remove.each_value do |r|
-              @business.send(k).delete(r) if current.include?(r)
+      params[:remove].each_key do |k|
+        puts "Names to Remove: #{params[:remove]}"
+        if current = @business[k] or current = @business.media[k]
+          #current = @business.media[k] if %w(photos videos press).include?(k)
+          new = []
+          puts current
+          params[:remove][k].each_pair do |r,v|
+            if %w(photos videos press).include?(k)
+              puts "@business.media[#{k}].delete_at(#{r}) invoked"
+              puts current.include?(v)
+              @business.media[k].delete_at(r.to_i) if current.include?(v)
+              @business.media.save
+            else
+              @business[k].delete_at(r.to_i) if current.include?(v)
             end
-            @business.send(k).compact.reject(&:blank?)
-            puts @business.send(k).inspect
+          end
+          if %w(photos videos press).include?(k)
+            @business.media[k].compact.reject(&:blank?)
+            puts @business.media[k].inspect
+          else
+            @business[k].compact.reject(&:blank?)
+            puts @business[k].inspect
           end
         end
       end
@@ -130,7 +190,7 @@ class Admin::BusinessesController < Admin::BaseController
     if @resp = params[:new]
       @type = params[:t]
       @types = @type
-      @types = @type + 's' unless @type == "keystaff"
+      @types = @type + 's' unless %w(keystaff photos press videos).include?(@type)
       if (true if Float(@resp) rescue false)
         @url = "#{params[:id] ? edit_admin_business_path : admin_businesses_path}/addfield?t=#{@type}&new=#{@resp.to_i+1}"
         @resp = @resp.to_i+1

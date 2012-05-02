@@ -86,22 +86,36 @@
     .formrow
       .splitform-half
         %h2 Contact Information
+        = f.label "Address"
+        = f.text_field :address
+        %br
         = f.label "Phone Number"
-        = text_field_tag "contact[phone]", @business.contact ? @business.contact.phone : nil
+        = text_field_tag "contact[phone]", @business.contact.try(:phone)
+        %br
+        = f.label "Email"
+        = text_field_tag "contact[email]", @business.contact.try(:email)
         %br
         = f.label "Website"
-        = text_field_tag "contact[website]", @business.contact ? @business.contact.website : nil
+        = text_field_tag "contact[website]", @business.contact.try(:website)
         %br
         = f.label "Blog"
-        = text_field_tag "contact[blog]", @business.contact ? @business.contact.blog : nil
+        = text_field_tag "contact[blog]", @business.contact.try(:blog)
         %br
         = f.label "Twitter"
-        = text_field_tag "contact[twitter]", @business.contact ? @business.contact.twitter : nil
+        = text_field_tag "contact[twitter]", @business.contact.try(:twitter)
         %br
         = f.label "Facebook"
-        = text_field_tag "contact[facebook]", @business.contact ? @business.contact.facebook : nil
+        = text_field_tag "contact[facebook]", @business.contact.try(:facebook)
       .splitform-half
         %h2 Media
+        = f.label "Press"
+        = render 'addmedia', field: "press"
+        %br
+        = f.label "Video"
+        = render 'addmedia', field: "videos"
+        %br
+        = f.label "Photos"
+        = render 'addmedia', field: "photos"
       .clear
 
     .end

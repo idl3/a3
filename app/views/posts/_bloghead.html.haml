@@ -1,3 +1,15 @@
+.upperhead
+  .thumbs
+    - @latest.try(:each) do |l|
+      .thumb{style: "width: 20%;word-break:break-word;display:inline-block;padding:0px 2%;background:#DDD;border-radius:5px;margin-right:1%;box-shadow:1px 1px 1px #AAA"}
+        = link_to image_tag(l.leadimage), article_path(l)
+        %br
+        .title{style: "height:40px"}
+          %h4= link_to l.title, article_path(l)
+        %br
+    .clear
+  %br
+
 %h1
   .header
     = link_to "The Blog", "/blog"

@@ -1,6 +1,150 @@
-.span2
+%style
+  :sass
+    tbody td
+      font-weight: 300
+
+    .hcolumn
+      width: 40%
+      margin: 0 5%
+      float: left
+
+    .clear
+      clear: both
+
+.span1
   &nbsp;
-.span8
-  &nbsp;
-.span2
+.span10
+  .static8.hero-unit
+    %br
+    = link_to "Businesses", businesses_path
+    = "/"
+    = link_to @business.name, business_path(@business)
+    %br
+    .head{style: "border-bottom:1px solid #eed;"}
+      .logo{style: "float:left;min-width:150px;"}= image_tag @business.logo
+      .name{style: "float:left;max-width:55%;"}
+        %h1= @business.name
+        .span{style: "margin-left:0px"}
+          %br
+          %h4 Description:
+          %span= @business.uvp
+          - unless @business.mission.blank?
+            %h4{style: "font-size:13px"} Mission:
+            %span= @business.mission
+          %br
+          - unless @business.nutshell.blank?
+            %br
+            %h4{style: "font-size:13px"} In a Nutshell:
+            %span= @business.nutshell
+          %br
+          %br
+      .clear
+    %br
+    %br
+    .hcolumn.bizdesc
+      %h2 People in the business
+      %table.table
+        %tbody
+          %tr
+            %th{width: "50%"} Number of Founders:
+            %td= @business.founders.size
+          %tr
+            %th Founders:
+            %td
+              - @business.founders.try(:each) do |f|
+                =raw "#{f}<br/>"
+          %tr
+            %th Number of Staff:
+            %td= @options["staff_no"][@business.staffno] unless @business.staffno == 1
+          %tr
+            %th Key Individual Staff:
+            %td
+              - @business.keystaff.try(:each) do |k|
+                =raw "#{k}<br/>"
+          %tr
+            %th Advisors:
+            %td
+              - @business.advisors.try(:each) do |a|
+                =raw "#{a}<br/>"
+          %tr
+            %th Competitors:
+            %td
+              - @business.competitors.try(:each) do |c|
+                =raw "#{c}<br/>"
+          %tr
+            %th Advisors:
+            %td
+              - @business.investors.try(:each) do |i|
+                =raw "#{i}<br/>"
+
+    .hcolumn.businessinfo
+      %h2 Business information
+      %table.table
+        %tbody
+          %tr
+            %th Business Type:
+            %td= @options["business_types"][@business.biztype]
+          %tr
+            %th Industry:
+            %td= @options["primary_industries"][@business.industrypri]
+          %tr
+            %th Founded:
+            %td= @business.founded
+          %tr
+            %th Registration ID:
+            %td= @business.regno
+          %tr
+            %th Revenue Model:
+            %td= @business.revenuemodel
+          %tr
+            %th Target Market:
+            %td= @business.target.join(", ")
+    .clear
+    %br
+    .hcolumn
+      %h2 Contact information
+      %table.table
+        %tbody
+          %tr
+            %th Address:
+            %td= @business.address
+          %tr
+            %th Phone Number:
+            %td= @business.contact[:phone]
+          %tr
+            %th Email:
+            %td= link_to @business.contact[:email], "mailto:#{@business.contact[:email]}" if @business.contact[:email]
+          %tr
+            %th Website:
+            %td= link_to @business.contact[:website], @business.contact[:website]
+          %tr
+            %th Blog:
+            %td= link_to @business.contact[:blog], @business.contact[:blog]
+          %tr
+            %th Twitter:
+            %td= link_to @business.contact[:twitter], @business.contact[:twitter]
+          %tr
+            %th Facebook:
+            %td= link_to @business.contact[:facebook], @business.contact[:facebook]
+    .hcolumn
+      %h2 In the Media
+      %table.table
+        %tbody
+          %tr
+            %th Press:
+            %td
+              -@business.media[:press].try(:each) do |p|
+                = link_to p, p
+          %tr
+            %th Videos:
+            %td
+              - @business.media[:videos].try(:each) do |v|
+                = v
+          %tr
+            %th Photos:
+            %td
+              - @business.media[:photos].try(:each) do |p|
+                = p
+    .clear
+.span1
   &nbsp;

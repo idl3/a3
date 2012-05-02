@@ -25,6 +25,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'twitter-bootstrap-rails'
 gem 'tinymce-rails', :git => "git://github.com/spohlenz/tinymce-rails.git"
+gem 'will_paginate'
 
 # Attachment Gems
 gem 'carrierwave', :git => "git://github.com/jnicklas/carrierwave.git"

@@ -1,54 +1,20 @@
 class BusinessesController < ApplicationController
-  INDUSTRIES = [
-    "All",
-    "Advertising",
-    "Bio Technology",
-    "Clean Tech",
-    "Consumer Devices",
-    "Consumer Web",
-    "eCommerce",
-    "Education",
-    "Enterprise",
-    "Games",
-    "Video",
-    "Entertainment",
-    "Legal",
-    "Mobile",
-    "Wireless",
-    "Hosting",
-    "Consulting",
-    "Communication",
-    "Search",
-    "Security",
-    "Semiconductor",
-    "Software",
-    "Other"
-  ]
-  REQUISITES = [
-    "All",
-    "Funding",
-    "Co-Founders",
-    "Talent",
-    "Technology",
-    "Network",
-    "Merger & Acquisition",
-    "Joint Ventures",
-    "Mentorship"
-  ]
 
   def businesses
     if params[:s]
-      @businesses = Business.find(:all, :conditions => ["name LIKE ? OR uvp LIKE ? AND approved = 't'", "%#{params[:s]}%", "%#{params[:s]}%"])
+      search = "%#{params[:s]}%"
+      @businesses = Business.where("name LIKE ? OR uvp LIKE ? OR founders LIKE ? AND approved = 't'", search,search,search).paginate(page: params[:page])
     else
-      @businesses = Business.where(:approved => true).all
+      @businesses = Business.where(approved: true).paginate(page: params[:page],per_page: 2)
     end
-    @industries = INDUSTRIES
-    @requisites = REQUISITES
   end
 
   def business
-    @business = Business.where(:approved => true, :id => params[:id])
-    if @business.empty?
+    @options = YAML.load_file("config/app/business.yml")
+    @types = YAML.load_file("config/app/business.yml")["business_types"]
+    @industries = YAML.load_file("config/app/business.yml")["primary_industries"]
+    @business = Business.find_by_id(params[:id])
+    unless @business.approved?
       flash[:alert] = "Business does not exist"
       redirect_to businesses_path
     end
