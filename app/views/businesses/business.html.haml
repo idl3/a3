@@ -16,12 +16,14 @@
 .span10
   .static8.hero-unit
     %br
+    = link_to "Home", root_path
+    = "/"
     = link_to "Businesses", businesses_path
     = "/"
     = link_to @business.name, business_path(@business)
     %br
     .head{style: "border-bottom:1px solid #eed;"}
-      .logo{style: "float:left;min-width:150px;"}= image_tag @business.logo
+      .logo{style: "float:left;min-width:15%;margin-right:5%;"}= image_tag @business.logo
       .name{style: "float:left;max-width:55%;"}
         %h1= @business.name
         .span{style: "margin-left:0px"}
