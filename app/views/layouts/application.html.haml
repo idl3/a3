@@ -4,9 +4,9 @@
     = render "layouts/head"
   %body
     = render "layouts/nav"
+    = yield(:search)
     .container-fluid{ :style => "position:relative;" }
-      .content
-        = render "layouts/content"
+      = render "layouts/content"
 
     = javascript_include_tag "application"
     = yield(:js)

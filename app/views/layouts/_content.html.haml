@@ -1,4 +1,4 @@
-.row-fluid.notifybar
+.notifybar.row{style: "margin-left: -20px;width:100%"}
   .span8
     &nbsp;
   .span4.notification
@@ -11,8 +11,8 @@
       - else
         .alert.alert-success= v
 
-.row-fluid.maincontent
-  .row-fluid
+.maincontent.row{style: "margin-left: -20px; width:100%;"}
+  .contdiv
     = yield
-    .row-fluid
-      = render "layouts/footer"
+  .footdiv
+    = render "layouts/footer"

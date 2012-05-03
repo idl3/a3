@@ -1,10 +1,18 @@
 @import "compass/css3"
 @media (max-width: 767px)
   .container-fluid
-    margin-top: -58px
+    margin-top: -100px
+  .searchcontainer
+    position: relative !important
+    top: -20px !important
+    z-index: -1 !important
 @media (max-width: 979px) and (min-width: 768px)
   .container-fluid
-    margin-top: -58px
+    margin-top: -100px
+  .searchcontainer
+    position: relative !important
+    top: -20px !important
+    z-index: -1 !important
 
 .boxed
   background: white
@@ -31,7 +39,14 @@
   height: 50px
 
 .listing
+  width: 98%
   margin-left: 1% !important
+  margin-right: 1% !important
+
+.notifybar.row, .maincontent.row
+  width: 100%
+  margin-left: 20px
+
 
 .sfbar
   text-align: center
@@ -104,15 +119,19 @@
       margin: auto
       img
         vertical-align: middle
-
-.searchbar
-  width: 120%
-  margin-left: -10%
-  background: gray
-  margin-top: -35px
-  padding-top: 15px
-  margin-bottom: 25px
-  +box-shadow(#777 1px 1px 1px)
+.searchcontainer
+  overflow-x: hidden
+  width: 100%
+  position: absolute
+  top: 40px
+  z-index: 99
+  .searchbar
+    width: 120%
+    margin-left: -10%
+    background: gray
+    padding-top: 15px
+    margin-bottom: 25px
+    +box-shadow(#777 1px 1px 1px)
 
 .search
   position: relative
@@ -124,9 +143,10 @@
 .thumbnails
   margin-left: 0px !important
   .span2
-    min-width: 185px
-    margin-left: 0px
-    margin-right: 20px
+    width: 15% !important
+    min-width: 160px !important
+    margin-left: 1%
+    margin-right: 0.5%
 
 .clear
   clear:both
