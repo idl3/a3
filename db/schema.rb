@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502092107) do
+ActiveRecord::Schema.define(:version => 20120503050644) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20120502092107) do
     t.string   "address"
     t.integer  "founded"
     t.string   "shareholding"
-    t.string   "mission"
+    t.text     "mission",      :limit => 255
     t.string   "founders"
     t.integer  "staffno"
     t.string   "keystaff"
@@ -57,8 +57,8 @@ ActiveRecord::Schema.define(:version => 20120502092107) do
     t.text     "target"
     t.string   "competitors"
     t.string   "nutshell"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.string   "name"
     t.string   "type"
     t.boolean  "approved"
