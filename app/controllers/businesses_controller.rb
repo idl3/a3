@@ -5,7 +5,7 @@ class BusinessesController < ApplicationController
       search = "%#{params[:s]}%"
       @businesses = Business.where("name LIKE ? OR uvp LIKE ? OR founders LIKE ? AND approved = 't'", search,search,search).paginate(page: params[:page])
     else
-      @businesses = Business.where(approved: true).paginate(page: params[:page],per_page: 2)
+      @businesses = Business.where(approved: true).paginate(page: params[:page])
     end
   end
 
